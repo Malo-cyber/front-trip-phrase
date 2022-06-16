@@ -1,0 +1,8 @@
+<div class="footer">
+    <button mat-button color="primary" *ngFor="let button of buttons" class="list-element">
+        <div class="text-button">
+           {{ button.code | translate }}
+        </div>
+        <span class="material-icons">{{ button.image }}</span>
+    </button>
+</div>
