@@ -1,5 +1,10 @@
 <div class="header">
-<mat-toolbar class="toolbar-header" color="primary">
-    
-</mat-toolbar>
+  <mat-toolbar class="toolbar-header" color="primary">
+    <div class="flag-user-image">
+      <img [src]="flagUserCountry" />
+    </div>
+    <div class="title">
+        {{ headerTitle | translate }}
+    </div>
+  </mat-toolbar>
 </div>
