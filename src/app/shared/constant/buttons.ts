@@ -10,10 +10,6 @@ export const BUTTONS: Button[] = [
     image: 'work',
   },
   {
-    code: 'home',
-    image: 'home',
-  },
-  {
     code: 'list',
     image: 'list',
   },

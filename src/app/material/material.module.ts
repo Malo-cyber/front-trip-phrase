@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserModule } from '@angular/platform-browser';
-import {MatSliderModule} from '@angular/material/slider'
+import { MatSliderModule} from '@angular/material/slider'
+import { MatToolbarModule } from '@angular/material/toolbar'
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatSliderModule} from '@angular/material/slider'
     MatNativeDateModule, 
     MatInputModule, 
     BrowserAnimationsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatToolbarModule
   ],
   exports  :[
     CommonModule,
@@ -42,7 +44,8 @@ import {MatSliderModule} from '@angular/material/slider'
     MatNativeDateModule, 
     MatInputModule, 
     BrowserAnimationsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatToolbarModule
   ]
 })
 export class MaterialModule { }

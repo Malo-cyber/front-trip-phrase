@@ -1,8 +1,16 @@
 <div class="footer">
-    <button mat-button color="primary" *ngFor="let button of buttons" class="list-element">
+    <div class="home-container">
+        <div class="home-underlay"></div>
+        <button color="accent" mat-fab class="home-button">
+            <i class="material-icons">home</i>
+        </button> 
+    </div>   
+<mat-toolbar class="toolbar-footer" color="primary">
+    <button mat-button *ngFor="let button of buttons" class="list-element">
         <div class="text-button">
            {{ button.code | translate }}
         </div>
         <i class="material-icons">{{ button.image }}</i>
     </button>
+</mat-toolbar>
 </div>
