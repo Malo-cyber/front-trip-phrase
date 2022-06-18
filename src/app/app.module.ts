@@ -6,6 +6,8 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TripPhraseModule } from './trip-phrase/trip-phrase.module';
+import { RouterModule } from '@angular/router';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -19,8 +21,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule,
-    BrowserAnimationsModule
+    TripPhraseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

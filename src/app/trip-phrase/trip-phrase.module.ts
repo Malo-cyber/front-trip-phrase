@@ -6,6 +6,9 @@ import { BuyComponent } from './buy/buy.component';
 import { LearnComponent } from './learn/learn.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ListsComponent } from './lists/lists.component';
+import { HomeComponent } from './home/home.component';
+import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -13,10 +16,11 @@ import { ListsComponent } from './lists/lists.component';
     BuyComponent,
     LearnComponent,
     SettingsComponent,
-    ListsComponent
+    ListsComponent,
+    HomeComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     TripPhraseRoutingModule
   ]
 })

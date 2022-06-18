@@ -7,6 +7,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { MaterialModule } from '../material/material.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -16,13 +17,15 @@ import { MaterialModule } from '../material/material.module';
   declarations: [FooterComponent, HeaderComponent],
   imports: [CommonModule,
     FormsModule,
+    RouterModule,
     HttpClientModule,
     TranslateModule.forRoot({defaultLanguage: 'fr',loader: {
       provide: TranslateLoader,
       useFactory: HttpLoaderFactory,
       deps: [HttpClient]
     }}),
-    MaterialModule],
+    MaterialModule,
+  ],
   exports: [FooterComponent,HeaderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
