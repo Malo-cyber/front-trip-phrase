@@ -3,11 +3,12 @@
   <div class="learn-container">
     <mat-card *ngFor="let country of countries">
       <mat-card-title>
+        <span class="title-card">{{ 'learn-some' | translate }}</span>
         <img [src]="'assets/' + country.flag_4x3" />
       </mat-card-title>
       <mat-card-content>
         <button mat-raised-button color="accent">
-          {{ country.name  | truncate:25 }}
+          {{ country.name  | truncate:15 }}
         </button>
       </mat-card-content>
     </mat-card>
