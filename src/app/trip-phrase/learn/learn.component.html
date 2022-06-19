@@ -2,8 +2,12 @@
   <app-header [headerTitle]="'learn'"></app-header>
   <div class="learn-container">
     <mat-card *ngFor="let country of countries">
-      <img [src]="'assets/' + country.flag_4x3" />
-      Learn some {{ country.name }}
+      <mat-card-title>
+        <img [src]="'assets/' + country.flag_4x3" />
+        <button mat-raised-button color="accent">
+          {{ "learn-some" | translate: { country: country.name } }}
+        </button>
+      </mat-card-title>
     </mat-card>
   </div>
   <app-footer></app-footer>
