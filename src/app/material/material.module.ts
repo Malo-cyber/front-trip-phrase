@@ -9,11 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatSliderModule} from '@angular/material/slider'
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-
+import { MatSliderModule } from '@angular/material/slider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -23,35 +23,37 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatIconModule,
     MatCommonModule,
     MatButtonModule,
-    BrowserModule, 
-    FormsModule, 
-    MatDatepickerModule, 
-    MatFormFieldModule, 
-    MatNativeDateModule, 
-    MatInputModule, 
+    BrowserModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule,
     BrowserAnimationsModule,
     MatSliderModule,
     MatToolbarModule,
     MatSlideToggleModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatCardModule,
   ],
-  exports  :[
+  exports: [
     CommonModule,
     MatInputModule,
     MatIconModule,
     MatCommonModule,
     MatButtonModule,
-    BrowserModule, 
-    FormsModule, 
-    MatDatepickerModule, 
-    MatFormFieldModule, 
-    MatNativeDateModule, 
-    MatInputModule, 
+    BrowserModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule,
     BrowserAnimationsModule,
     MatSliderModule,
     MatToolbarModule,
     MatSlideToggleModule,
-    MatButtonToggleModule
-  ]
+    MatButtonToggleModule,
+    MatCardModule,
+  ],
 })
-export class MaterialModule { }
+export class MaterialModule {}

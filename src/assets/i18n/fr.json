@@ -1,8 +1,9 @@
 {
-    "buy": "Acheter",
-    "learn": "Apprendre",
-    "home": "Accueil",
-    "list": "Mes listes",
-    "settings": "Parametres",
-    "dark-mode": "Mode sombre"
+  "buy": "Acheter",
+  "learn": "Apprendre",
+  "home": "Accueil",
+  "list": "Mes listes",
+  "settings": "Parametres",
+  "dark-mode": "Mode sombre",
+  "add-phrase": "Ajouter une phrase"
 }

@@ -1,5 +1,10 @@
 <div class="container">
-    <app-header [headerTitle]="'learn'"></app-header>
-    <app-footer></app-footer>
+  <app-header [headerTitle]="'learn'"></app-header>
+  <div class="learn-container">
+    <mat-card *ngFor="let country of countries">
+      <img [src]="'assets/' + country.flag_4x3" />
+      Learn some {{ country.name }}
+    </mat-card>
+  </div>
+  <app-footer></app-footer>
 </div>
-  
