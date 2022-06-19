@@ -8,16 +8,17 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
-  declarations: [FooterComponent, HeaderComponent],
+  declarations: [FooterComponent, HeaderComponent,TruncatePipe],
   imports: [
     TranslateModule,
     RouterModule,
     HttpClientModule,
     MaterialModule,
   ],
-  exports: [FooterComponent, HeaderComponent,MaterialModule],
+  exports: [FooterComponent, HeaderComponent,MaterialModule,TruncatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}
