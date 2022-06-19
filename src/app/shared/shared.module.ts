@@ -9,24 +9,15 @@ import { HttpLoaderFactory } from '../app.module';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
 
-
-
-
-
 @NgModule({
   declarations: [FooterComponent, HeaderComponent],
-  imports: [CommonModule,
-    FormsModule,
+  imports: [
+    TranslateModule,
     RouterModule,
     HttpClientModule,
-    TranslateModule.forRoot({defaultLanguage: 'fr',loader: {
-      provide: TranslateLoader,
-      useFactory: HttpLoaderFactory,
-      deps: [HttpClient]
-    }}),
     MaterialModule,
   ],
-  exports: [FooterComponent,HeaderComponent],
+  exports: [FooterComponent, HeaderComponent,MaterialModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

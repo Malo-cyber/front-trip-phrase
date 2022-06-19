@@ -9,6 +9,9 @@ import { ListsComponent } from './lists/lists.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { AppModule, HttpLoaderFactory } from '../app.module';
+import { HttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,6 +23,7 @@ import { RouterModule } from '@angular/router';
     HomeComponent
   ],
   imports: [
+    TranslateModule,
     SharedModule,
     TripPhraseRoutingModule
   ]

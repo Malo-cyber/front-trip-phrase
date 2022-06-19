@@ -1,5 +1,7 @@
 <div class="container">
-    <app-header [headerTitle]="'settings'"></app-header>
-    <app-footer></app-footer>
+  <app-header [headerTitle]="'settings'"></app-header>
+  <div class="settings">
+    <mat-slide-toggle [checked]="darkModeService.darkModeActivated | async" (change)="toggleDarkOrLightMode()" >{{ "dark-mode" | translate }}</mat-slide-toggle>
+  </div>
+  <app-footer></app-footer>
 </div>
-  

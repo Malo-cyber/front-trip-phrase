@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DarkModeService } from '../../shared/services/dark-mode.service';
 
 @Component({
   selector: 'app-buy',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BuyComponent implements OnInit {
 
-  constructor() { }
+  constructor(public darkModeService: DarkModeService) { }
 
   ngOnInit(): void {
   }
