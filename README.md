@@ -25,3 +25,23 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+Builder une application mobile :
+
+
+IOS : Avoir xCode
+
+Android : Avoir Android Studio
+
+npm run build => va copier le contenu du site dans les plateformes conernées (android/ios)
+
+npx cap open android 
+
+npx cap open ios
+
+
+en fonction du build voulu choisir ios ou android 
+
+
+dans xCode ou Android Studio faire la tambouille
