@@ -8,5 +8,8 @@ if (environment.production) {
   enableProdMode();
 }
 
+import { defineCustomElements as jeepSqlite} from 'jeep-sqlite/loader';
+
+jeepSqlite(window);
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
