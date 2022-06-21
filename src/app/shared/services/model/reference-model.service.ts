@@ -39,7 +39,7 @@ export class ReferenceModelService {
   getSubjects(db: SQLiteDBConnection) {
     return db
       .query(QUERY_GET_SUBJECT_TABLE)
-      .then((result) => console.log(result))
+      .then((result) => result)
       .catch((err) => console.log(err));
   }
 }

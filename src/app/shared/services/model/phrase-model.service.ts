@@ -11,7 +11,8 @@ const QUERY_GET_PHRASES_TABLE = 'SELECT * FROM PHRASES';
   providedIn: 'root',
 })
 export class PhraseModelService {
-  constructor() {}
+  constructor() {
+  }
 
   public createTable(db: SQLiteDBConnection) {
     return db

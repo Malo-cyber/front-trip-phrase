@@ -6,6 +6,41 @@
     <button mat-button>{{ 'add-phrase' | translate }}</button>
   </mat-toolbar>
   <div class="lists-container">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          {{ 'subject' | translate}}
+        </ng-template>
+        <mat-expansion-panel class="subject" *ngFor="let subject of subjects">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Personal data
+            </mat-panel-title>
+            <mat-panel-description>
+              Type your name and age
+              <mat-icon>account_circle</mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+      
+          <mat-form-field appearance="fill">
+            <mat-label>First name</mat-label>
+            <input matInput>
+          </mat-form-field>
+      
+          <mat-form-field appearance="fill">
+            <mat-label>Age</mat-label>
+            <input matInput type="number" min="1">
+          </mat-form-field>
+        </mat-expansion-panel>
+      </mat-tab>
+    
+      <mat-tab>
+        <ng-template mat-tab-label>
+          {{ 'phrase' | translate}}
+        </ng-template>
+        Content 2
+      </mat-tab>
+    </mat-tab-group>
   </div>
   <app-footer></app-footer>
 </div>
