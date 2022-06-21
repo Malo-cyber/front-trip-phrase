@@ -54,7 +54,8 @@ export class AppComponent {
         await this.phraseModel.getPhrases(db);
         await this.referenceModel.createTable(db);
         await this.referenceModel.insertPhrase(db);
-        await this.referenceModel.getPhrases(db);
+        await this.referenceModel.getReferences(db);
+        await this.referenceModel.getSubjects(db);
         await db.close();
       });
     });

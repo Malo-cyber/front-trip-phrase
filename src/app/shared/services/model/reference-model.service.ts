@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 
-
 const QUERY_CREATE_REFERENCES_TABLE =
-  'CREATE TABLE IF NOT EXISTS REFERENCES_KEY (id integer PRIMARY KEY,reference,image);';
-const QUERY_INSERT_REFERENCES_TABLE = 'INSERT INTO REFERENCES_KEY (reference,image) VALUES ("FART",null)';
+  'CREATE TABLE IF NOT EXISTS REFERENCES_KEY (id integer PRIMARY KEY,reference,image,theme);';
+const QUERY_INSERT_REFERENCES_TABLE =
+  'INSERT OR REPLACE INTO REFERENCES_KEY (id,reference,image,theme) VALUES (1,"FART",null,"REDNECK"),(2,"REDNECK",null,null)';
 const QUERY_GET_REFERENCES_TABLE = 'SELECT * FROM REFERENCES_KEY';
+const QUERY_GET_SUBJECT_TABLE =
+  'SELECT * FROM REFERENCES_KEY WHERE theme IS NULL';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReferenceModelService {
-
-  constructor() { }
-
+  constructor() {}
 
   public createTable(db: SQLiteDBConnection) {
     return db
@@ -29,9 +29,16 @@ export class ReferenceModelService {
       .catch((err) => console.log(err));
   }
 
-  getPhrases(db: SQLiteDBConnection) {
+  getReferences(db: SQLiteDBConnection) {
     return db
       .query(QUERY_GET_REFERENCES_TABLE)
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  }
+
+  getSubjects(db: SQLiteDBConnection) {
+    return db
+      .query(QUERY_GET_SUBJECT_TABLE)
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
   }
