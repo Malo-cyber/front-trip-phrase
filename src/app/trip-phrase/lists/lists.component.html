@@ -1,8 +1,11 @@
 <div class="container">
-  <app-header [headerTitle]="'list'"></app-header>
-
+  <app-header [headerTitle]="'list'">
+  </app-header>
+  <mat-toolbar class="sub-header" color="accent">
+    <button mat-button>{{ 'add-subject' | translate }}</button>
+    <button mat-button>{{ 'add-phrase' | translate }}</button>
+  </mat-toolbar>
   <div class="lists-container">
-    <button mat-raised-button color="accent">{{ 'add-phrase' | translate }}</button>
   </div>
   <app-footer></app-footer>
 </div>
