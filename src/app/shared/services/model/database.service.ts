@@ -24,7 +24,10 @@ export class DatabaseService {
     await db.close();
   }
 
-  public getDatabaseConnection() {
+  public async getDatabaseConnection(): Promise<SQLiteDBConnection> {
+    await customElements.whenDefined('jeep-sqlite');
+    const jeepSqliteEl = document.querySelector('jeep-sqlite');
+    await jeepSqliteEl?.isStoreOpen();
     return this.sqlite.initializePlugin().then(async (ret) => {
       return this.sqlite.createConnection(
         'trip-phrase.db',

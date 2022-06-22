@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,9 +10,9 @@ import { SQLiteService } from './shared/services/model/sqlite.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
 })
-export class AppComponent {
+export class AppComponent{
   title = 'front-trip-phrase';
-  public isWeb = false;
+  public isWeb = true;
   private PLATFORM: string = Capacitor.getPlatform();
   private PLATFORMS: string[] = ['android', 'ios'];
   constructor(
@@ -25,7 +25,6 @@ export class AppComponent {
     translate.setDefaultLang('fr');
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     translate.use('fr');
-    this.isWeb = this.PLATFORM === 'web' ? true : false;
     this.initializeApp();
   }
 

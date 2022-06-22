@@ -12,7 +12,6 @@ const routes: Routes = [
   {path : 'learn', component : LearnComponent},
   {path : 'lists', component : ListsComponent},
   {path : 'settings', component : SettingsComponent}
-
 ];
 
 @NgModule({
