@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCommonModule, MatNativeDateModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,11 +17,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
     MatCommonModule,
@@ -40,10 +43,13 @@ import { MatListModule } from '@angular/material/list';
     MatCardModule,
     MatTabsModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatAutocompleteModule
   ],
   exports: [
     CommonModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatIconModule,
     MatCommonModule,
@@ -62,7 +68,9 @@ import { MatListModule } from '@angular/material/list';
     MatCardModule,
     MatTabsModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatAutocompleteModule
   ],
 })
 export class MaterialModule {}

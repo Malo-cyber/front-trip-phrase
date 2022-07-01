@@ -6,4 +6,5 @@ export interface Reference {
     reference:string;
     image:string;
     phrases: Phrase[];
+    references?: Reference[];
 }

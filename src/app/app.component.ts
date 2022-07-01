@@ -37,10 +37,7 @@ export class AppComponent{
           const jeepSqliteEl = document.querySelector('jeep-sqlite');
           if (jeepSqliteEl != null) {
             await this.sqlite.initWebStore();
-            console.log(`>>>> isStoreOpen ${await jeepSqliteEl.isStoreOpen()}`);
-          } else {
-            console.log('>>>> jeepSqliteEl is null');
-          }
+          } 
         }
       });
     });

@@ -18,21 +18,18 @@ export class PhraseModelService {
   public createTable(db: SQLiteDBConnection) {
     return db
       .execute(QUERY_CREATE_PHRASES_TABLE)
-      .then((result) => console.log(result))
       .catch((err) => console.log(err));
   }
 
   public insertPhrase(db: SQLiteDBConnection) {
     return db
       .execute(QUERY_INSERT_PHRASES_TABLE)
-      .then((result) => console.log(result))
       .catch((err) => console.log(err));
   }
 
   getPhrases(db: SQLiteDBConnection) {
     return db
       .query(QUERY_GET_PHRASES_TABLE)
-      .then((result) => console.log(result))
       .catch((err) => console.log(err));
   }
 

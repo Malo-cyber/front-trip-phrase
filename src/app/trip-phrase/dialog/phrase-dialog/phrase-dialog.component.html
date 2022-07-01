@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>{{ "add-phrase" | translate }}</h1>
+<div mat-dialog-content>
+  <p>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Thème</mat-label>
+      <input
+        type="text"
+        placeholder="Indiquer le thème"
+        aria-label="Indiquer le thème"
+        matInput
+        [formControl]="themeControl"
+        [matAutocomplete]="autoTheme"
+      />
+      <mat-autocomplete autoActiveFirstOption #autoTheme="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Langue</mat-label>
+      <input
+        type="text"
+        placeholder="Indiquer la langue"
+        aria-label="Indiquer la langue"
+        matInput
+        [formControl]="langControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptionsCountries | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </p>
+</div>
