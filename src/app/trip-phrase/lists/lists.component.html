@@ -1,42 +1,41 @@
 <div class="container">
-  <app-header [headerTitle]="'list'">
-  </app-header>
+  <app-header [headerTitle]="'list'"> </app-header>
   <mat-toolbar class="sub-header" color="accent">
-    <button mat-button>{{ 'add-subject' | translate }}</button>
-    <button mat-button>{{ 'add-phrase' | translate }}</button>
+    <button mat-button>{{ "add-subject" | translate }}</button>
+    <button mat-button>{{ "add-phrase" | translate }}</button>
   </mat-toolbar>
   <div class="lists-container">
     <mat-tab-group>
       <mat-tab>
         <ng-template mat-tab-label>
-          {{ 'subject' | translate}}
+          {{ "subject" | translate }}
         </ng-template>
-        <mat-expansion-panel class="subject" *ngFor="let subject of subjects">
+        <mat-expansion-panel
+          mat-tab-content
+          class="subject"
+          *ngFor="let subject of subjects"
+        >
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Personal data
+              {{
+                customTranslateService.getTranslationForKey(
+                  'fr',
+                  subject.phrases
+                )
+              }}
             </mat-panel-title>
-            <mat-panel-description>
-              Type your name and age
-              <mat-icon>account_circle</mat-icon>
-            </mat-panel-description>
           </mat-expansion-panel-header>
-      
-          <mat-form-field appearance="fill">
-            <mat-label>First name</mat-label>
-            <input matInput>
-          </mat-form-field>
-      
-          <mat-form-field appearance="fill">
-            <mat-label>Age</mat-label>
-            <input matInput type="number" min="1">
-          </mat-form-field>
+          <mat-list class="trad-list">
+            Liste des traductions : 
+              <mat-list-item *ngFor="let phrase of subject.phrases"> 
+                <img class="traduction-flag" [src]="flagPath + phrase.code_langue + flagExt" /> {{ phrase.phrase }} </mat-list-item>
+           </mat-list>
         </mat-expansion-panel>
       </mat-tab>
-    
+
       <mat-tab>
         <ng-template mat-tab-label>
-          {{ 'phrase' | translate}}
+          {{ "phrase" | translate }}
         </ng-template>
         Content 2
       </mat-tab>

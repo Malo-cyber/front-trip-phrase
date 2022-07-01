@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { FLAGS_PATH_SQUARE, FLAG_IMAGE_EXTENSION } from '../../constant/config';
 
 @Component({
   selector: 'app-header',
@@ -7,8 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./header.component.sass'],
 })
 export class HeaderComponent implements OnInit {
-  private FLAGS_PATH: string = 'assets/images/flags/1x1/';
-  private FLAG_IMAGE_EXTENSION: string = '.svg';
   public flagUserCountry: string = '';
 
   @Input() public headerTitle: string = '';
@@ -17,6 +16,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.flagUserCountry =
-      this.FLAGS_PATH + this.translate.currentLang + this.FLAG_IMAGE_EXTENSION;
+    FLAGS_PATH_SQUARE + this.translate.currentLang + FLAG_IMAGE_EXTENSION;
   }
 }

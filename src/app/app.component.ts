@@ -42,7 +42,6 @@ export class AppComponent{
             console.log('>>>> jeepSqliteEl is null');
           }
         }
-        await this.databaseService.initData();
       });
     });
   }
