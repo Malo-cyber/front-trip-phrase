@@ -111,7 +111,6 @@ export class PhraseDialogComponent implements OnInit {
       } as Phrase);
     });
     const db = await this.databaseService.getDatabaseConnection();
-    await db.open();
     await this.referenceModelService.insertReference(
       db,
       reference
@@ -139,7 +138,7 @@ export class PhraseDialogComponent implements OnInit {
   }
 
   private _filterCountry(value: string): Country[] {
-    const filterValue = value ? value : '';
+    const filterValue = value ? value.toLowerCase() : '';
     return this.langOptions.filter((option) =>
       option.name.toLowerCase().includes(filterValue)
     );

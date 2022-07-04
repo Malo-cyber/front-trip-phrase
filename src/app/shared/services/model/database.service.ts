@@ -14,16 +14,18 @@ export class DatabaseService {
   constructor(
     private sqlite: SQLiteService,
     private phraseModel: PhraseModelService,
-    private referenceModel: ReferenceModelService
+    private referenceModel: ReferenceModelService,
+    private platform : Platform
   ) {
-    this.sqlite.initializePlugin().then(async (ret) => {
-      this.initData();
+    this.platform.ready().then(async () => {
+      this.sqlite.initializePlugin().then(async (ret) => {
+        this.initData();
+      });
     });
   }
 
   public async initData() {
     const db: SQLiteDBConnection = await this.getDatabaseConnection();
-    await db.open();
     await this.phraseModel.createTable(db);
     await this.referenceModel.createTable(db);
     await this.phraseModel.insertPhraseInit(db);
@@ -42,6 +44,7 @@ export class DatabaseService {
         0
       );
     }
+    await this.databaseConnection.open();
     return this.databaseConnection;
   }
 }

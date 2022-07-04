@@ -41,32 +41,44 @@ export class ListsComponent implements OnInit {
 
   async refreshData() {
     const db = await this.dataBaseService.getDatabaseConnection();
-    await db.open();
     const res: any = await this.referenceModelService.getSubjects(db);
     this.subjects = res.values as Reference[];
-    this.subjects.map(async (subject) => {
-      const results: any = await this.phraseModelService.getPhraseByReference(
-        db,
-        subject.id
-      );
-      subject.phrases = results.values as Phrase[];
-      subject.currentLangtrad =
-        this.customTranslateService.getTranslationForKey(
-          this.translateService.currentLang,
-          subject.phrases
-        );
-      const resultSubreferences: any =
-      await this.referenceModelService.getReferences(db, subject.reference);
-      subject.references = resultSubreferences.values as Reference[];
-      subject.references.map(async (reference) => {
+
+
+    await Promise.all([
+      this.subjects.map(async (subject) => {
         const results: any = await this.phraseModelService.getPhraseByReference(
           db,
-          reference.id
+          subject.id
         );
-        reference.phrases = results.values as Phrase[];
-      });
-    });
-    await db.close();
+        subject.phrases = results.values as Phrase[];
+
+
+        subject.currentLangtrad =
+          this.customTranslateService.getTranslationForKey(
+            this.translateService.currentLang,
+            subject.phrases
+          );
+
+
+        const resultSubreferences: any =
+        await this.referenceModelService.getReferences(db, subject.reference);
+        subject.references = resultSubreferences.values as Reference[];
+
+
+
+        return Promise.all([
+          subject.references.map(async (reference) => {
+            const results: any =
+              await this.phraseModelService.getPhraseByReference(
+                db,
+                reference.id
+              );
+            return (reference.phrases = results.values as Phrase[]);
+          }),
+        ]);
+      }),
+    ])
   }
 
   public addPhraseDialog(theme: Reference | undefined) {
