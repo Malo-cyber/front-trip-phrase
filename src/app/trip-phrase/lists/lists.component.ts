@@ -43,7 +43,6 @@ export class ListsComponent implements OnInit {
     const db = await this.dataBaseService.getDatabaseConnection();
     await db.open();
     const res: any = await this.referenceModelService.getSubjects(db);
-
     this.subjects = res.values as Reference[];
     this.subjects.map(async (subject) => {
       const results: any = await this.phraseModelService.getPhraseByReference(

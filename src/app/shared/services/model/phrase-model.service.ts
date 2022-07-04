@@ -30,10 +30,10 @@ export class PhraseModelService {
       .catch((err) => console.log(err));
   }
 
-  public insertPhrase(db: SQLiteDBConnection, phrases: Phrase[], reference_key : number | undefined) {
+  public insertPhrase(db: SQLiteDBConnection, phrases: Phrase[], reference_key : number) {
     const sqlValuesInsert: string = phrases
       .map(
-        (phrase: Phrase) => '("' + phrase.langue.code + '","' + phrase.phrase + '","'+ reference_key+'")'
+        (phrase: Phrase) => '("' + phrase.langue.code + '","' + phrase.phrase + '",'+ reference_key+')'
       )
       .join(',');
     console.log(sqlValuesInsert);

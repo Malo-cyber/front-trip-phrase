@@ -43,7 +43,7 @@ export class ReferenceModelService {
     return db
       .run(QUERY_INSERT_REFERENCES_TABLE + sqlValuesInsert)
       .then((res) => {
-        if (reference.phrases.length > 0) {
+        if (reference.phrases.length > 0 && res.changes?.lastId) {
           return this.phraseModelService.insertPhrase(
             db,
             reference.phrases,
