@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
+import { tap } from 'rxjs';
 import { FLAG_IMAGE_EXTENSION, FLAGS_PATH } from '../../shared/constant/config';
 import { Phrase } from '../../shared/model/phrase';
 import { Reference } from '../../shared/model/reference';
@@ -29,6 +31,7 @@ export class ListsComponent implements OnInit {
     public sqlite: SQLiteService,
     public platform: Platform,
     public customTranslateService: CustomTranslationService,
+    public translateService: TranslateService,
     public dialog: MatDialog
   ) {}
 
@@ -48,9 +51,13 @@ export class ListsComponent implements OnInit {
         subject.id
       );
       subject.phrases = results.values as Phrase[];
-
+      subject.currentLangtrad =
+        this.customTranslateService.getTranslationForKey(
+          this.translateService.currentLang,
+          subject.phrases
+        );
       const resultSubreferences: any =
-        await this.referenceModelService.getReferences(db, subject.reference);
+      await this.referenceModelService.getReferences(db, subject.reference);
       subject.references = resultSubreferences.values as Reference[];
       subject.references.map(async (reference) => {
         const results: any = await this.phraseModelService.getPhraseByReference(
@@ -63,14 +70,21 @@ export class ListsComponent implements OnInit {
     await db.close();
   }
 
-  public addPhraseDialog() {
-    const themes: string[] = this.subjects.map((subject) =>
-      this.customTranslateService.getTranslationForKey('fr', subject.phrases)
-    );
-    const dialogRef = this.dialog.open(PhraseDialogComponent, {
-      data: {
-        themes
-      },
-    });
+  public addPhraseDialog(theme: Reference | undefined) {
+    this.dialog
+      .open(PhraseDialogComponent, {
+        panelClass: 'full-screen-modal',
+        maxWidth: '100vw',
+        data: {
+          theme,
+        },
+      })
+      .afterClosed()
+      .pipe(
+        tap((resultDialog: string) =>
+          !!resultDialog ? this.refreshData() : null
+        )
+      )
+      .subscribe();
   }
 }

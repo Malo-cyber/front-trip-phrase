@@ -1,14 +1,9 @@
 <div class="container">
   <app-header [headerTitle]="'list'"> </app-header>
   <div class="lists-container">
-    <mat-tab-group>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          {{ "subject" | translate }}
-        </ng-template>
-        <button mat-raised-button color="primary" class="add-button"
-        >{{ "add-subject" | translate }}</button>
-        <mat-expansion-panel
+  <button mat-raised-button color="primary" class="add-button"
+  >{{ "add-subject" | translate }}</button>
+    <mat-expansion-panel
           mat-tab-content
           class="subject"
           *ngFor="let subject of subjects"
@@ -16,46 +11,11 @@
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{
-                customTranslateService.getTranslationForKey(
-                  "fr",
-                  subject.phrases
-                )
+                  subject.currentLangtrad
               }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-list class="trad-list">
-            Liste des traductions :
-            <mat-list-item *ngFor="let phrase of subject.phrases">
-              <img
-                class="traduction-flag"
-                [src]="flagPath + phrase.code_langue + flagExt"
-              />
-              {{ phrase.phrase }}
-            </mat-list-item>
-          </mat-list>
-        </mat-expansion-panel>
-      </mat-tab>
-
-      <mat-tab>
-        <ng-template mat-tab-label>
-          {{ "phrase" | translate }}
-        </ng-template>
-        <mat-expansion-panel
-          mat-tab-content
-          class="subject"
-          *ngFor="let subject of subjects"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{
-                customTranslateService.getTranslationForKey(
-                  "fr",
-                  subject.phrases
-                )
-              }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <button mat-raised-button color="primary" class="add-button" (click)="addPhraseDialog()">{{ "add-phrase" | translate }}</button>
+          <button mat-raised-button color="primary" class="add-button" (click)="addPhraseDialog(subject)">{{ "add-phrase-button" | translate }}</button>
           <mat-list class="trad-list">
             Liste des phrases :
             <mat-list-item *ngFor="let reference of subject.references">{{
@@ -63,8 +23,6 @@
             }}</mat-list-item>
           </mat-list>
         </mat-expansion-panel>
-      </mat-tab>
-    </mat-tab-group>
   </div>
   <app-footer></app-footer>
 </div>

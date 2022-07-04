@@ -26,8 +26,8 @@ export class DatabaseService {
     await db.open();
     await this.phraseModel.createTable(db);
     await this.referenceModel.createTable(db);
-    await this.phraseModel.insertPhrase(db);
-    await this.referenceModel.insertPhrase(db);
+    await this.phraseModel.insertPhraseInit(db);
+    await this.referenceModel.insertRefInit(db);
     await db.close();
   }
 
