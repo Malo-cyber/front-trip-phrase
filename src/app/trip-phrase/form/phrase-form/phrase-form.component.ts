@@ -81,15 +81,8 @@ export class PhraseFormComponent implements OnInit {
   }
 
   public async sendPhrases() {
-    const reference_id = (
-      this.translateService.currentLang +
-      this.phrases.value[0].texte +
-      Math.random() * 150000000000000000
-    ).toUpperCase();
-
     const reference: Reference = {
-      reference: reference_id,
-      theme: this.themeSelected ? this.themeSelected.reference : '',
+      theme: !!this.themeSelected ? this.themeSelected.id : null,
       image: '',
       phrases: [],
     };
@@ -99,7 +92,6 @@ export class PhraseFormComponent implements OnInit {
         phrase: phrase.texte,
       } as Phrase);
     });
-    console.log(reference);
     const db = await this.databaseService.getDatabaseConnection();
     await this.referenceModelService.insertReference(db, reference);
     await db.close();

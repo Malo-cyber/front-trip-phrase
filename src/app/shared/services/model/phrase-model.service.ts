@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { Phrase } from '../../model/phrase';
+import { Reference } from '../../model/reference';
 
 const QUERY_CREATE_PHRASES_TABLE =
   'CREATE TABLE IF NOT EXISTS PHRASES (id integer PRIMARY KEY,code_langue,phrase,reference_key);';
@@ -11,6 +12,7 @@ const QUERY_GET_PHRASES_FROM_REF_TABLE =
   'SELECT * FROM PHRASES WHERE reference_key=';
 const QUERY_INSERT_PHRASES_TABLE =
   'INSERT OR REPLACE INTO PHRASES (code_langue,phrase,reference_key) VALUES ';
+  const QUERY_DELETE_PHRASES = 'DELETE FROM PHRASES WHERE reference_key='
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +45,10 @@ export class PhraseModelService {
 
   getPhrases(db: SQLiteDBConnection) {
     return db.query(QUERY_GET_PHRASES_TABLE).catch((err) => console.log(err));
+  }
+
+  deletePhrasesForReference(db: SQLiteDBConnection,reference:  Reference) {
+    return db.query(QUERY_DELETE_PHRASES + reference.id).catch((err) => console.log(err));
   }
 
   getPhraseByReference(db: SQLiteDBConnection, ref: number | undefined) {

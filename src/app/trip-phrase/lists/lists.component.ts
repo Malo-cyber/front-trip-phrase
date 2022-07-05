@@ -42,8 +42,6 @@ export class ListsComponent implements OnInit {
     const db = await this.dataBaseService.getDatabaseConnection();
     const res: any = await this.referenceModelService.getSubjects(db);
     this.subjects = res.values as Reference[];
-
-    console.log(res.values);
     await Promise.all([
       this.subjects.map(async (subject) => {
         const results: any = await this.phraseModelService.getPhraseByReference(
@@ -61,7 +59,7 @@ export class ListsComponent implements OnInit {
 
 
         const resultSubreferences: any =
-        await this.referenceModelService.getReferences(db, subject.reference);
+        await this.referenceModelService.getReferences(db, subject.id);
         subject.references = resultSubreferences.values as Reference[];
 
 
@@ -78,5 +76,12 @@ export class ListsComponent implements OnInit {
         ]);
       }),
     ])
+  }
+
+  public async deleteItem(reference : Reference){
+    const db = await this.dataBaseService.getDatabaseConnection();
+    await this.referenceModelService.deleteReferenceAndChilds(db, reference);
+    await db.close();
+    this.refreshData();
   }
 }

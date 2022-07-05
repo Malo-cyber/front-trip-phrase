@@ -1,29 +1,59 @@
 <div class="container">
   <app-header [headerTitle]="'list'"> </app-header>
   <div class="lists-container">
-  <button mat-raised-button color="primary" class="add-button"  [routerLink]="'add-subject'"
-  >{{ "add-subject" | translate }}</button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="add-button"
+      [routerLink]="'add-subject'"
+    >
+      {{ "add-subject" | translate }}
+    </button>
     <mat-expansion-panel
-          mat-tab-content
-          class="subject"
-          *ngFor="let subject of subjects"
+      mat-tab-content
+      class="subject"
+      *ngFor="let subject of subjects"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ subject.currentLangtrad }}
+          <button *ngIf="subject?.references?.length === 0" (click)="deleteItem(subject)" mat-mini-fab color="accent" aria-label="Delete phrase">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button
+        mat-raised-button
+        color="primary"
+        class="add-button"
+        [routerLink]="'add-phrase/' + subject.id"
+      >
+        {{ "add-phrase-button" | translate }}
+      </button>
+      <mat-list
+        *ngIf="subject && subject.references && subject.references.length > 0"
+        class="trad-list"
+      >
+        Liste des phrases :
+        <mat-list-item *ngFor="let reference of subject.references"
+          >{{
+            customTranslateService.getTranslationForKey("fr", reference.phrases)
+          }}
+          <button
+            (click)="deleteItem(reference)"
+            mat-mini-fab
+            color="accent"
+            aria-label="Delete phrase"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          </mat-list-item
         >
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{
-                  subject.currentLangtrad
-              }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <button mat-raised-button color="primary" class="add-button"  [routerLink]="'add-phrase/'+ subject.id">{{ "add-phrase-button" | translate }}</button>
-          <mat-list *ngIf="subject && subject.references && subject.references.length > 0" class="trad-list">
-            Liste des phrases :
-            <mat-list-item *ngFor="let reference of subject.references">{{
-              customTranslateService.getTranslationForKey("fr", reference.phrases)
-            }}</mat-list-item>
-          </mat-list>
-          <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">Aucune phrase d'enregistrée.</div>
-        </mat-expansion-panel>
+      </mat-list>
+      <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">
+        Aucune phrase d'enregistrée.
+      </div>
+    </mat-expansion-panel>
   </div>
   <app-footer></app-footer>
 </div>

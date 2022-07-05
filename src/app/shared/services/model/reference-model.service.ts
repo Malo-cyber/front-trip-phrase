@@ -5,15 +5,17 @@ import { Reference } from '../../model/reference';
 import { PhraseModelService } from './phrase-model.service';
 
 const QUERY_CREATE_REFERENCES_TABLE =
-  'CREATE TABLE IF NOT EXISTS REFERENCES_KEY (id integer PRIMARY KEY,reference,image,theme);';
+  'CREATE TABLE IF NOT EXISTS REFERENCES_KEY (id integer PRIMARY KEY,image,theme);';
 const QUERY_INSERT_REFERENCES_INIT_TABLE =
-  'INSERT OR REPLACE INTO REFERENCES_KEY (id,reference,image,theme) VALUES (1,"FART",null,"REDNECK"),(2,"REDNECK",null,null)';
+  'INSERT OR REPLACE INTO REFERENCES_KEY (id,image,theme) VALUES (1,null,2),(2,null,null)';
 const QUERY_INSERT_REFERENCES_TABLE =
-  'INSERT INTO REFERENCES_KEY (reference,image,theme) VALUES ';
+  'INSERT INTO REFERENCES_KEY (image,theme) VALUES ';
 const QUERY_GET_REFERENCES_TABLE_ID = 'SELECT * FROM REFERENCES_KEY WHERE id=';
 const QUERY_GET_REFERENCES_TABLE = 'SELECT * FROM REFERENCES_KEY WHERE theme=';
 const QUERY_GET_SUBJECT_TABLE =
   "SELECT * FROM REFERENCES_KEY WHERE theme IS NULL OR theme =''";
+
+  const QUERY_DELETE_REFERENCE ="DELETE FROM REFERENCES_KEY WHERE id="
 
 @Injectable({
   providedIn: 'root',
@@ -34,15 +36,12 @@ export class ReferenceModelService {
   }
 
   public insertReference(db: SQLiteDBConnection, reference: Reference) {
-    console.log(reference);
     const sqlValuesInsert: string =
       '("' +
-      reference.reference +
-      '","' +
       reference.image +
-      '","' +
+      '",' +
       reference.theme +
-      '")';
+      ')';
     return db
       .run(QUERY_INSERT_REFERENCES_TABLE + sqlValuesInsert)
       .then((res) => {
@@ -58,9 +57,9 @@ export class ReferenceModelService {
       .catch((err) => console.log(err));
   }
 
-  getReferences(db: SQLiteDBConnection, theme: string) {
+  getReferences(db: SQLiteDBConnection, theme: number | undefined) {
     return db
-      .query(QUERY_GET_REFERENCES_TABLE + '"' + theme + '"')
+      .query(QUERY_GET_REFERENCES_TABLE + theme)
       .catch((err) => console.log(err));
   }
 
@@ -80,6 +79,19 @@ export class ReferenceModelService {
         return reference[0];
       })
       .catch((err) => console.log(err));
+  }
+
+  async deleteReferenceAndChilds(db : SQLiteDBConnection, reference : Reference) : Promise<void>{
+    //Effacage des clés étrangère
+    await this.phraseModelService.deletePhrasesForReference(db,reference);
+    //Effaçage de la reference mère
+    await this.deleteOnlyReference(db,reference);
+  }
+
+  public deleteOnlyReference(db : SQLiteDBConnection, reference : Reference){
+    return db
+    .execute(QUERY_DELETE_REFERENCE + reference.id)
+    .catch((err) => console.log(err));
   }
 
   getSubjects(db: SQLiteDBConnection) {
