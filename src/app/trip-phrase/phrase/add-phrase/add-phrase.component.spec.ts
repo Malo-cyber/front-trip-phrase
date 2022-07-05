@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PhraseDialogComponent } from './phrase-dialog.component';
+import { AddPhraseComponent } from './add-phrase.component';
 
-describe('PhraseDialogComponent', () => {
-  let component: PhraseDialogComponent;
-  let fixture: ComponentFixture<PhraseDialogComponent>;
+describe('AddPhraseComponent', () => {
+  let component: AddPhraseComponent;
+  let fixture: ComponentFixture<AddPhraseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PhraseDialogComponent ]
+      declarations: [ AddPhraseComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PhraseDialogComponent);
+    fixture = TestBed.createComponent(AddPhraseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubjectDialogComponent } from './subject-dialog.component';
+import { PhraseFormComponent } from './phrase-form.component';
 
-describe('SubjectDialogComponent', () => {
-  let component: SubjectDialogComponent;
-  let fixture: ComponentFixture<SubjectDialogComponent>;
+describe('PhraseFormComponent', () => {
+  let component: PhraseFormComponent;
+  let fixture: ComponentFixture<PhraseFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubjectDialogComponent ]
+      declarations: [ PhraseFormComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SubjectDialogComponent);
+    fixture = TestBed.createComponent(PhraseFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

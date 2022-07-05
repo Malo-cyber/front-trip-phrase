@@ -36,7 +36,6 @@ export class PhraseModelService {
         (phrase: Phrase) => '("' + phrase.langue.code + '","' + phrase.phrase + '",'+ reference_key+')'
       )
       .join(',');
-    console.log(sqlValuesInsert);
     return db
       .execute(QUERY_INSERT_PHRASES_TABLE + sqlValuesInsert)
       .catch((err) => console.log(err));

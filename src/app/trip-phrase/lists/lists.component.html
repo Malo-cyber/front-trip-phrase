@@ -1,7 +1,7 @@
 <div class="container">
   <app-header [headerTitle]="'list'"> </app-header>
   <div class="lists-container">
-  <button mat-raised-button color="primary" class="add-button"
+  <button mat-raised-button color="primary" class="add-button"  [routerLink]="'add-subject'"
   >{{ "add-subject" | translate }}</button>
     <mat-expansion-panel
           mat-tab-content
@@ -15,7 +15,7 @@
               }}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <button mat-raised-button color="primary" class="add-button" (click)="addPhraseDialog(subject)">{{ "add-phrase-button" | translate }}</button>
+          <button mat-raised-button color="primary" class="add-button"  [routerLink]="'add-phrase/'+ subject.id">{{ "add-phrase-button" | translate }}</button>
           <mat-list class="trad-list">
             Liste des phrases :
             <mat-list-item *ngFor="let reference of subject.references">{{

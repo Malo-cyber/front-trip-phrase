@@ -1,12 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, startWith } from 'rxjs';
 import {
@@ -20,16 +14,12 @@ import { Reference } from '../../../shared/model/reference';
 import { DatabaseService } from '../../../shared/services/model/database.service';
 import { ReferenceModelService } from '../../../shared/services/model/reference-model.service';
 
-export interface PhraseDialogData {
-  theme: Reference;
-}
-
 @Component({
-  selector: 'app-phrase-dialog',
-  templateUrl: './phrase-dialog.component.html',
-  styleUrls: ['./phrase-dialog.component.sass'],
+  selector: 'app-phrase-form',
+  templateUrl: './phrase-form.component.html',
+  styleUrls: ['./phrase-form.component.sass'],
 })
-export class PhraseDialogComponent implements OnInit {
+export class PhraseFormComponent implements OnInit {
   public flagPath = FLAGS_PATH;
   public flagExt = FLAG_IMAGE_EXTENSION;
 
@@ -44,7 +34,8 @@ export class PhraseDialogComponent implements OnInit {
   /**
    * Thème selectionné
    */
-  public themeSelected: Reference | undefined;
+  @Input()
+  public themeSelected: Reference | undefined | void;
 
   /**
    * Formulaire d'ajout de phrases
@@ -55,22 +46,20 @@ export class PhraseDialogComponent implements OnInit {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<PhraseDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: PhraseDialogData,
     private fb: FormBuilder,
     private translateService: TranslateService,
     private referenceModelService: ReferenceModelService,
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.langOptions = COUNTRIES;
-    this.themeSelected = this.data.theme;
     this.filteredOptionsCountries = this.addPhraseForm.controls[
       'langControl'
     ].valueChanges.pipe(
       startWith(''),
-      map((value: string) => this._filterCountry(value || ''))
+      map((value: any) => this._filterCountry(value))
     );
     const defaultLangue: Country | undefined = COUNTRIES.find(
       (country: Country) => country.code === this.translateService.currentLang
@@ -100,7 +89,7 @@ export class PhraseDialogComponent implements OnInit {
 
     const reference: Reference = {
       reference: reference_id,
-      theme: this.themeSelected?.reference,
+      theme: this.themeSelected ?  this.themeSelected.reference : '',
       image: '',
       phrases: [],
     };
@@ -110,21 +99,11 @@ export class PhraseDialogComponent implements OnInit {
         phrase: phrase.texte,
       } as Phrase);
     });
+    console.log(reference);
     const db = await this.databaseService.getDatabaseConnection();
-    await this.referenceModelService.insertReference(
-      db,
-      reference
-    );
+    await this.referenceModelService.insertReference(db, reference);
     await db.close();
-    this.dialogRef.close('VALIDATE');
-  }
-
-  public deleteLine(index: number): void {
-    this.phrases.removeAt(index);
-  }
-
-  public cancel() {
-    this.dialogRef.close();
+    this.router.navigate(['/lists']);
   }
 
   public isLanguageAlreadyAdded(langue: Country) {
@@ -137,11 +116,20 @@ export class PhraseDialogComponent implements OnInit {
     return country && country.name ? country.name : '';
   }
 
-  private _filterCountry(value: string): Country[] {
-    const filterValue = value ? value.toLowerCase() : '';
+  private _filterCountry(value: Country | string): Country[] {
+    const filterValue =
+      typeof value === 'string'
+        ? value.toLowerCase()
+        : !!value
+        ? value.name.toLowerCase()
+        : '';
     return this.langOptions.filter((option) =>
       option.name.toLowerCase().includes(filterValue)
     );
+  }
+
+  public deleteLine(index: number): void {
+    this.phrases.removeAt(index);
   }
 
   get phrases() {

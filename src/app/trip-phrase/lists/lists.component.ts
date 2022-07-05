@@ -11,7 +11,6 @@ import { DatabaseService } from '../../shared/services/model/database.service';
 import { PhraseModelService } from '../../shared/services/model/phrase-model.service';
 import { ReferenceModelService } from '../../shared/services/model/reference-model.service';
 import { SQLiteService } from '../../shared/services/model/sqlite.service';
-import { PhraseDialogComponent } from '../dialog/phrase-dialog/phrase-dialog.component';
 
 @Component({
   selector: 'app-lists',
@@ -44,7 +43,7 @@ export class ListsComponent implements OnInit {
     const res: any = await this.referenceModelService.getSubjects(db);
     this.subjects = res.values as Reference[];
 
-
+    console.log(res.values);
     await Promise.all([
       this.subjects.map(async (subject) => {
         const results: any = await this.phraseModelService.getPhraseByReference(
@@ -79,23 +78,5 @@ export class ListsComponent implements OnInit {
         ]);
       }),
     ])
-  }
-
-  public addPhraseDialog(theme: Reference | undefined) {
-    this.dialog
-      .open(PhraseDialogComponent, {
-        panelClass: 'full-screen-modal',
-        maxWidth: '100vw',
-        data: {
-          theme,
-        },
-      })
-      .afterClosed()
-      .pipe(
-        tap((resultDialog: string) =>
-          !!resultDialog ? this.refreshData() : null
-        )
-      )
-      .subscribe();
   }
 }
