@@ -1,54 +1,60 @@
 <div [formGroup]="addPhraseForm">
-    <div class="add-phrase-line">
-      <!-- AUTOCOMPLETE LANGUAGE-->
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Langue</mat-label>
-        <input
-          type="text"
-          placeholder="Indiquer la langue"
-          aria-label="Indiquer la langue"
-          matInput
-          formControlName="langControl"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete
-          [displayWith]="displayNameLangue"
-          autoActiveFirstOption
-          #auto="matAutocomplete"
-        >
-          <mat-option
-            *ngFor="let option of filteredOptionsCountries | async"
-            [value]="option"
-          >
-            {{ option.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <!-- ADD LINE BUTTON-->
-      <button mat-raised-button color="primary" (click)="addPhraseLine(addPhraseForm.controls['langControl'].value)">
-        Ajouter
-      </button>
-    </div>
-    <div class="phrases-form">
-      <div
-        formArrayName="phrases"
-        class="phrase-line"
-        *ngFor="let phrase of phrases['controls']; let i = index"
+  <div class="add-phrase-line">
+    <!-- AUTOCOMPLETE LANGUAGE-->
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Langue</mat-label>
+      <input
+        type="text"
+        placeholder="Indiquer la langue"
+        aria-label="Indiquer la langue"
+        matInput
+        formControlName="langControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        [displayWith]="displayNameLangue"
+        autoActiveFirstOption
+        #auto="matAutocomplete"
       >
-        <div class="line-wrapper" [formGroupName]="i" fxLayout="row">
-          <img [src]="flagPath + phrase.value.langue.code + flagExt" />
-          <mat-form-field fxFlex class="input-phrase-form" appearance="fill">
-            <mat-label>Phrase</mat-label>
-            <textarea
-              matInput
-              formControlName="texte"
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="5"
-            ></textarea>
-          </mat-form-field>
+        <mat-option
+          *ngFor="let option of filteredOptionsCountries | async"
+          [value]="option"
+        >
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <!-- ADD LINE BUTTON-->
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addPhraseLine(addPhraseForm.controls['langControl'].value)"
+    >
+      Ajouter
+    </button>
+  </div>
+  <div class="phrases-form">
+    <div
+      formArrayName="phrases"
+      class="phrase-line"
+      *ngFor="let phrase of phrases['controls']; let i = index"
+    >
+      <div class="line-wrapper" [formGroupName]="i" fxLayout="row">
+        <img [src]="flagPath + phrase.value.langue.code + flagExt" />
+        <mat-form-field fxFlex class="input-phrase-form" appearance="fill">
+          <mat-label>Phrase</mat-label>
+          <textarea
+            matInput
+            formControlName="texte"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
+          ></textarea>
+        </mat-form-field>
+        <div class="button-column">
           <button
+            *ngIf="i !== 0"
             mat-fab
             color="warn"
             aria-label="Effaçer la ligne"
@@ -59,8 +65,9 @@
         </div>
       </div>
     </div>
-    <div class="action-line">
-      <button
+  </div>
+  <div class="action-line">
+    <button
       class="cancel-button"
       mat-raised-button
       color="accent"
@@ -68,14 +75,14 @@
     >
       Annuler
     </button>
-      <button
-        (click)="sendPhrases()"
-        class="submit-button"
-        mat-raised-button
-        color="primary"
-        [disabled]="!addPhraseForm.valid"
-      >
-        Envoyer
-      </button>
-    </div>
+    <button
+      (click)="sendPhrases()"
+      class="submit-button"
+      mat-raised-button
+      color="primary"
+      [disabled]="!addPhraseForm.valid"
+    >
+      Envoyer
+    </button>
   </div>
+</div>

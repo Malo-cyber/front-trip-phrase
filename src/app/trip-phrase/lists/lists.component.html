@@ -16,12 +16,13 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <button mat-raised-button color="primary" class="add-button"  [routerLink]="'add-phrase/'+ subject.id">{{ "add-phrase-button" | translate }}</button>
-          <mat-list class="trad-list">
+          <mat-list *ngIf="subject && subject.references && subject.references.length > 0" class="trad-list">
             Liste des phrases :
             <mat-list-item *ngFor="let reference of subject.references">{{
               customTranslateService.getTranslationForKey("fr", reference.phrases)
             }}</mat-list-item>
           </mat-list>
+          <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">Aucune phrase d'enregistrée.</div>
         </mat-expansion-panel>
   </div>
   <app-footer></app-footer>

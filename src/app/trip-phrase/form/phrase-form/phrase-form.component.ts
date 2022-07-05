@@ -42,7 +42,7 @@ export class PhraseFormComponent implements OnInit {
    */
   public addPhraseForm: FormGroup = this.fb.group({
     langControl: null,
-    phrases: this.fb.array([], [Validators.required]),
+    phrases: this.fb.array([], [Validators.required, Validators.minLength(2)]),
   });
 
   constructor(
@@ -89,7 +89,7 @@ export class PhraseFormComponent implements OnInit {
 
     const reference: Reference = {
       reference: reference_id,
-      theme: this.themeSelected ?  this.themeSelected.reference : '',
+      theme: this.themeSelected ? this.themeSelected.reference : '',
       image: '',
       phrases: [],
     };
