@@ -1,5 +1,5 @@
 <div [formGroup]="addPhraseForm">
-  <div class="add-phrase-line">
+  <mat-toolbar color="accent" class="add-phrase-line">
     <!-- AUTOCOMPLETE LANGUAGE-->
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Langue</mat-label>
@@ -32,7 +32,7 @@
     >
       Ajouter
     </button>
-  </div>
+  </mat-toolbar>
   <div class="phrases-form">
     <div
       formArrayName="phrases"

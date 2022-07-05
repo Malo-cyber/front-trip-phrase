@@ -1,7 +1,7 @@
 import { Button } from '../model/button';
 
 export const BUTTONS: Button[] = [
-  {
+ /* {
     code: 'buy',
     image: 'shopping_cart',
     link: '/buy',
@@ -10,7 +10,7 @@ export const BUTTONS: Button[] = [
     code: 'learn',
     image: 'work',
     link: '/learn',
-  },
+  },*/
   {
     code: 'list',
     image: 'list',
