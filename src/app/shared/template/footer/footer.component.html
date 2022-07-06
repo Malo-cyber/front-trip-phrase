@@ -1,11 +1,13 @@
 <div class="footer">
   <div class="home-container">
-    <div class="home-underlay mat-app-background" color="primary"></div>
-    <a [routerLink]="'/'" color="accent" mat-fab class="home-button">
-      <i class="material-icons">home</i>
-    </a>
+    <div class="bar-line color-primary"></div>
+    <div class="home-underlay color-primary">
+      <a [routerLink]="'/'" color="accent" mat-fab class="home-button">
+        <i class="material-icons">home</i>
+      </a>
+    </div>
   </div>
-  <mat-toolbar class="toolbar-footer" color="primary">
+  <mat-toolbar class="toolbar-footer">
     <a
       mat-button
       *ngFor="let button of buttons"

@@ -19,31 +19,41 @@
             subject.currentLangtrad
           }}
           <div class="buttons-wrapper">
-            <button
-              [routerLink]="'watch-subject/' + subject.id"
-              mat-mini-fab
-              color="accent"
-              aria-label="Watch subject"
-            >
-              <mat-icon>remove_red_eye</mat-icon>
+            <button (click)="$event.stopPropagation();" mat-icon-button [matMenuTriggerFor]="menuSubject" aria-label="Menu actions subject">
+              <mat-icon>more_vert</mat-icon>
             </button>
-          <button
-            [routerLink]="'edit-subject/' + subject.id"
-            mat-mini-fab
+            <mat-menu #menuSubject="matMenu">
+            <button
+            [routerLink]="'watch-subject/' + subject.id"
+            mat-menu-item
             color="accent"
-            aria-label="Edit subject"
+            aria-label="Watch subject"
           >
-            <mat-icon>edit</mat-icon>
+            <mat-icon>remove_red_eye</mat-icon>
+            <span>Voir</span>
           </button>
-          <button
-            *ngIf="subject?.references?.length === 0"
-            (click)="deleteItem(subject)"
-            mat-mini-fab
-            color="accent"
-            aria-label="Delete phrase"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
+        <button
+          [routerLink]="'edit-subject/' + subject.id"
+          mat-menu-item
+          color="accent"
+          aria-label="Edit subject"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Modifier</span>
+        </button>
+        <button
+          *ngIf="subject?.references?.length === 0"
+          (click)="deleteItem(subject)"
+          mat-menu-item
+          color="accent"
+          aria-label="Delete phrase"
+        >
+          <mat-icon>delete</mat-icon>
+          <span>Supprimer</span>
+        </button>
+
+            </mat-menu>
+
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -70,30 +80,38 @@
             }}
           </a>
           <div class="buttons-wrapper">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu actions">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
             <button
               [routerLink]="'watch-phrase/' + reference.id"
-              mat-mini-fab
+              mat-menu-item
               color="accent"
               aria-label="Watch phrase"
             >
               <mat-icon>remove_red_eye</mat-icon>
+              <span>Voir</span>
             </button>
             <button
               [routerLink]="'edit-phrase/' + reference.id"
-              mat-mini-fab
+              mat-menu-item
               color="accent"
               aria-label="Edit phrase"
             >
               <mat-icon>edit</mat-icon>
+              <span>Modifier</span>
             </button>
             <button
               (click)="deleteItem(reference)"
-              mat-mini-fab
+              mat-menu-item
               color="accent"
               aria-label="Delete phrase"
             >
               <mat-icon>delete</mat-icon>
+              <span>Supprimer</span>
             </button>
+            </mat-menu>
           </div>
         </mat-list-item>
       </mat-list>
