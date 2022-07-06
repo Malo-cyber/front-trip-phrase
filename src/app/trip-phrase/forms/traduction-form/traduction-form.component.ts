@@ -24,13 +24,6 @@ export class TraductionFormComponent implements OnChanges {
   public flagPath = FLAGS_PATH;
   public flagExt = FLAG_IMAGE_EXTENSION;
 
-  /**
-   * Listes des langues/pays
-   */
-  //Liste de base
-  private langOptions: Country[] = [];
-  //Observable de filtrage
-  public filteredOptionsCountries: Observable<Country[]> | undefined;
 
   /**
    * Thème selectionné
@@ -54,7 +47,6 @@ export class TraductionFormComponent implements OnChanges {
    * Formulaire d'ajout de phrases
    */
   public addPhraseForm: FormGroup = this.fb.group({
-    langControl: null,
     phrases: this.fb.array([], [Validators.required, Validators.minLength(2)]),
   });
 
@@ -70,13 +62,7 @@ export class TraductionFormComponent implements OnChanges {
     const defaultLangue = this.getLangueObject(
       this.translateService.currentLang
     );
-    this.langOptions = COUNTRIES;
-    this.filteredOptionsCountries = this.addPhraseForm.controls[
-      'langControl'
-    ].valueChanges.pipe(
-      startWith(''),
-      map((value: any) => this._filterCountry(value))
-    );
+
     if (!this.editActions.includes(this.action ? this.action : '')) {
       this.refSelected?.phrases.map((traduction: Phrase) => {
         const langue = this.getLangueObject(traduction.code_langue);
@@ -147,17 +133,6 @@ export class TraductionFormComponent implements OnChanges {
     return country && country.name ? country.name : '';
   }
 
-  private _filterCountry(value: Country | string): Country[] {
-    const filterValue =
-      typeof value === 'string'
-        ? value.toLowerCase()
-        : !!value
-        ? value.name.toLowerCase()
-        : '';
-    return this.langOptions.filter((option) =>
-      option.name.toLowerCase().includes(filterValue)
-    );
-  }
 
   public deleteLine(index: number): void {
     this.phrases.removeAt(index);

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ConfigService } from './model/config.service';
+import { DatabaseService } from './model/database.service';
 
 @Injectable({
   providedIn: 'root',
@@ -7,12 +9,10 @@ import { BehaviorSubject } from 'rxjs';
 export class DarkModeService {
   public darkModeActivated :BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false);
 
-  constructor() {}
+  constructor() {
 
-  isDarkModeStored(){
-    //TODO POUCHDB REQUEST TO SEE IF DARK MODE ACTIVATED
-    return false;
   }
+
 
   toggleDarkMode(){
     document.body.classList.add('theme-alternate');

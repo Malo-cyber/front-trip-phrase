@@ -11,13 +11,15 @@
       <!-- TODO MODEL AND LOGIC-->
     </div>
     <div class="config-panel">
-      <mat-list>
-        TODO :
-        <mat-list-item>
-          Gérer la configuration côté base de données, avec favoris utilisateur
-        </mat-list-item>
-      </mat-list>
-      <!-- TODO MODEL AND LOGIC-->
+          <app-add-langue-form
+            [parentFormGroup]="addFavoriteLanguagesForm"
+            (addPhraseLine)="addFavorite($event)"
+          ></app-add-langue-form>
+          <div class="country-badges">
+            <div class="favorite-item" *ngFor="let favorite of favorites">
+              <img class="fav-image" [src]="flagPath + favorite.code + flagExt" />
+            </div>
+          </div>
     </div>
   </div>
   <app-footer></app-footer>
