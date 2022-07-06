@@ -97,7 +97,6 @@ export class TraductionFormComponent implements OnChanges {
         this.phrases.push(linePhraseForm);
       }
     }
-    this.addPhraseForm.controls['langControl'].setValue(undefined);
   }
 
   public async sendPhrases() {
