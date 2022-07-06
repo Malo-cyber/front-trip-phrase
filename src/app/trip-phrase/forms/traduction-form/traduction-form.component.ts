@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { map, Observable, startWith } from 'rxjs';
+import { Observable, startWith, map } from 'rxjs';
 import {
   FLAGS_PATH,
   FLAG_IMAGE_EXTENSION,
@@ -15,11 +15,11 @@ import { DatabaseService } from '../../../shared/services/model/database.service
 import { ReferenceModelService } from '../../../shared/services/model/reference-model.service';
 
 @Component({
-  selector: 'app-phrase-form',
-  templateUrl: './phrase-form.component.html',
-  styleUrls: ['./phrase-form.component.sass'],
+  selector: 'app-traduction-form',
+  templateUrl: './traduction-form.component.html',
+  styleUrls: ['./traduction-form.component.sass'],
 })
-export class PhraseFormComponent implements OnInit {
+export class TraductionFormComponent implements OnChanges {
   public flagPath = FLAGS_PATH;
   public flagExt = FLAG_IMAGE_EXTENSION;
 
@@ -35,7 +35,13 @@ export class PhraseFormComponent implements OnInit {
    * Thème selectionné
    */
   @Input()
-  public themeSelected: Reference | undefined | void;
+  public refSelected: Reference | undefined | void | null;
+
+  /**
+   * Lecture seule visualisation
+   */
+  @Input()
+  public isReadOnly = false;
 
   /**
    * Formulaire d'ajout de phrases
@@ -53,7 +59,10 @@ export class PhraseFormComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  public initData() {
+    const defaultLangue = this.getLangueObject(
+      this.translateService.currentLang
+    );
     this.langOptions = COUNTRIES;
     this.filteredOptionsCountries = this.addPhraseForm.controls[
       'langControl'
@@ -61,17 +70,36 @@ export class PhraseFormComponent implements OnInit {
       startWith(''),
       map((value: any) => this._filterCountry(value))
     );
-    const defaultLangue: Country | undefined = COUNTRIES.find(
-      (country: Country) => country.code === this.translateService.currentLang
-    );
-    !!defaultLangue ? this.addPhraseLine(defaultLangue) : null;
+    if (this.refSelected?.phrases.length === 0) {
+      !!defaultLangue ? this.addPhraseLine(defaultLangue) : null;
+    } else {
+      this.refSelected?.phrases.map((traduction: Phrase) => {
+        const langue = this.getLangueObject(traduction.code_langue);
+        !!langue ? this.addPhraseLine(langue, traduction.phrase) : null;
+      });
+    }
   }
 
-  public addPhraseLine(langue: Country): void {
+  public ngOnChanges() {
+    if (!!this.refSelected) {
+      this.initData();
+    }
+  }
+
+  public getLangueObject(code_langue: string) {
+    return COUNTRIES.find(
+      (country: Country) => country.code === code_langue
+    );
+  }
+
+  public addPhraseLine(langue: Country, texte: string = ''): void {
     if (!!langue && typeof langue !== 'string') {
       if (!this.isLanguageAlreadyAdded(langue)) {
         const linePhraseForm = this.fb.group({
-          texte: ['', Validators.required],
+          texte: [{
+            value: texte,
+            disabled: this.isReadOnly
+        }, Validators.required],
           langue: [langue, Validators.required],
         });
         this.phrases.push(linePhraseForm);
@@ -82,7 +110,7 @@ export class PhraseFormComponent implements OnInit {
 
   public async sendPhrases() {
     const reference: Reference = {
-      theme: !!this.themeSelected ? this.themeSelected.id : null,
+      theme: !!this.refSelected ? this.refSelected.id : null,
       image: '',
       phrases: [],
     };

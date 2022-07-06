@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PhraseFormComponent } from './phrase-form.component';
+import { TraductionComponent } from './traduction.component';
 
-describe('PhraseFormComponent', () => {
-  let component: PhraseFormComponent;
-  let fixture: ComponentFixture<PhraseFormComponent>;
+describe('TraductionComponent', () => {
+  let component: TraductionComponent;
+  let fixture: ComponentFixture<TraductionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PhraseFormComponent ]
+      declarations: [ TraductionComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PhraseFormComponent);
+    fixture = TestBed.createComponent(TraductionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

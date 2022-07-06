@@ -5,7 +5,7 @@
       mat-raised-button
       color="primary"
       class="add-button"
-      [routerLink]="'add-subject'"
+      [routerLink]="'add-subject/subject'"
     >
       {{ "add-subject" | translate }}
     </button>
@@ -16,7 +16,10 @@
     >
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{ subject.currentLangtrad }}
+          <a class="watch-link" [routerLink]="'watch-subject/' + subject.id">{{ subject.currentLangtrad }}</a>
+          <button [routerLink]="'edit-subject/'+ subject.id" mat-mini-fab color="accent" aria-label="Edit subject">
+            <mat-icon>edit</mat-icon>
+          </button>
           <button *ngIf="subject?.references?.length === 0" (click)="deleteItem(subject)" mat-mini-fab color="accent" aria-label="Delete phrase">
             <mat-icon>delete</mat-icon>
           </button>
@@ -36,9 +39,14 @@
       >
         Liste des phrases :
         <mat-list-item *ngFor="let reference of subject.references"
-          >{{
+          >
+          <a class="traductions" [routerLink]="'watch-phrase/' + reference.id">{{
             customTranslateService.getTranslationForKey("fr", reference.phrases)
           }}
+        </a>
+        <button [routerLink]="'edit-phrase/'+ reference.id" mat-mini-fab color="accent" aria-label="Edit subject">
+          <mat-icon>edit</mat-icon>
+        </button>
           <button
             (click)="deleteItem(reference)"
             mat-mini-fab

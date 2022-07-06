@@ -7,8 +7,8 @@ import { ListsComponent } from './lists/lists.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { PhraseFormComponent } from './form/phrase-form/phrase-form.component';
-import { AddPhraseComponent } from './phrase/add-phrase/add-phrase.component';
+import { TraductionComponent } from './lists/traduction/traduction.component';
+import { TraductionFormComponent } from './forms/traduction-form/traduction-form.component';
 
 
 @NgModule({
@@ -18,8 +18,8 @@ import { AddPhraseComponent } from './phrase/add-phrase/add-phrase.component';
     SettingsComponent,
     ListsComponent,
     HomeComponent,
-    PhraseFormComponent,
-    AddPhraseComponent
+    TraductionComponent,
+    TraductionFormComponent
   ],
   imports: [
     TranslateModule,

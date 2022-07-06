@@ -1,5 +1,5 @@
 <div [formGroup]="addPhraseForm">
-  <mat-toolbar color="accent" class="add-phrase-line">
+  <mat-toolbar *ngIf="!this.isReadOnly" color="accent" class="add-phrase-line">
     <!-- AUTOCOMPLETE LANGUAGE-->
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Langue</mat-label>
@@ -54,7 +54,7 @@
         </mat-form-field>
         <div class="button-column">
           <button
-            *ngIf="i !== 0"
+            *ngIf="i !== 0 && !this.isReadOnly"
             mat-fab
             color="warn"
             aria-label="Effaçer la ligne"
@@ -73,9 +73,10 @@
       color="accent"
       [routerLink]="'/lists'"
     >
-      Annuler
+      Retour
     </button>
     <button
+      *ngIf="!this.isReadOnly"
       (click)="sendPhrases()"
       class="submit-button"
       mat-raised-button
