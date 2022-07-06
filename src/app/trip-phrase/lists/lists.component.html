@@ -15,14 +15,36 @@
       *ngFor="let subject of subjects"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          <a class="watch-link" [routerLink]="'watch-subject/' + subject.id">{{ subject.currentLangtrad }}</a>
-          <button [routerLink]="'edit-subject/'+ subject.id" mat-mini-fab color="accent" aria-label="Edit subject">
+        <mat-panel-title>{{
+            subject.currentLangtrad
+          }}
+          <div class="buttons-wrapper">
+            <button
+              [routerLink]="'watch-subject/' + subject.id"
+              mat-mini-fab
+              color="accent"
+              aria-label="Watch subject"
+            >
+              <mat-icon>remove_red_eye</mat-icon>
+            </button>
+          <button
+            [routerLink]="'edit-subject/' + subject.id"
+            mat-mini-fab
+            color="accent"
+            aria-label="Edit subject"
+          >
             <mat-icon>edit</mat-icon>
           </button>
-          <button *ngIf="subject?.references?.length === 0" (click)="deleteItem(subject)" mat-mini-fab color="accent" aria-label="Delete phrase">
+          <button
+            *ngIf="subject?.references?.length === 0"
+            (click)="deleteItem(subject)"
+            mat-mini-fab
+            color="accent"
+            aria-label="Delete phrase"
+          >
             <mat-icon>delete</mat-icon>
           </button>
+          </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <button
@@ -38,25 +60,42 @@
         class="trad-list"
       >
         Liste des phrases :
-        <mat-list-item *ngFor="let reference of subject.references"
-          >
-          <a class="traductions" [routerLink]="'watch-phrase/' + reference.id">{{
-            customTranslateService.getTranslationForKey("fr", reference.phrases)
-          }}
-        </a>
-        <button [routerLink]="'edit-phrase/'+ reference.id" mat-mini-fab color="accent" aria-label="Edit subject">
-          <mat-icon>edit</mat-icon>
-        </button>
-          <button
-            (click)="deleteItem(reference)"
-            mat-mini-fab
-            color="accent"
-            aria-label="Delete phrase"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          </mat-list-item
-        >
+        <mat-list-item *ngFor="let reference of subject.references">
+          <a class="traductions"
+            >{{
+              customTranslateService.getTranslationForKey(
+                "fr",
+                reference.phrases
+              )
+            }}
+          </a>
+          <div class="buttons-wrapper">
+            <button
+              [routerLink]="'watch-phrase/' + reference.id"
+              mat-mini-fab
+              color="accent"
+              aria-label="Watch phrase"
+            >
+              <mat-icon>remove_red_eye</mat-icon>
+            </button>
+            <button
+              [routerLink]="'edit-phrase/' + reference.id"
+              mat-mini-fab
+              color="accent"
+              aria-label="Edit phrase"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              (click)="deleteItem(reference)"
+              mat-mini-fab
+              color="accent"
+              aria-label="Delete phrase"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
       </mat-list>
       <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">
         Aucune phrase d'enregistrée.
