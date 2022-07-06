@@ -12,7 +12,7 @@ const QUERY_GET_PHRASES_FROM_REF_TABLE =
   'SELECT * FROM PHRASES WHERE reference_key=';
 const QUERY_INSERT_PHRASES_TABLE =
   'INSERT OR REPLACE INTO PHRASES (code_langue,phrase,reference_key) VALUES ';
-  const QUERY_DELETE_PHRASES = 'DELETE FROM PHRASES WHERE reference_key='
+const QUERY_DELETE_PHRASES = 'DELETE FROM PHRASES WHERE reference_key=';
 
 @Injectable({
   providedIn: 'root',
@@ -32,23 +32,40 @@ export class PhraseModelService {
       .catch((err) => console.log(err));
   }
 
-  public insertPhrase(db: SQLiteDBConnection, phrases: Phrase[], reference_key : number) {
-    const sqlValuesInsert: string = phrases
-      .map(
-        (phrase: Phrase) => '("' + phrase.langue.code + '","' + phrase.phrase + '",'+ reference_key+')'
-      )
-      .join(',');
-    return db
-      .execute(QUERY_INSERT_PHRASES_TABLE + sqlValuesInsert)
-      .catch((err) => console.log(err));
+  public insertPhrase(
+    db: SQLiteDBConnection,
+    phrases: Phrase[],
+    reference_key: number
+  ) {
+    if (reference_key >= 0) {
+      const sqlValuesInsert: string = phrases
+        .map(
+          (phrase: Phrase) =>
+            '("' +
+            phrase.langue.code +
+            '","' +
+            phrase.phrase +
+            '",' +
+            reference_key +
+            ')'
+        )
+        .join(',');
+      return db
+        .execute(QUERY_INSERT_PHRASES_TABLE + sqlValuesInsert)
+        .catch((err) => console.log(err));
+    }else{
+      return Promise.reject();
+    }
   }
 
   getPhrases(db: SQLiteDBConnection) {
     return db.query(QUERY_GET_PHRASES_TABLE).catch((err) => console.log(err));
   }
 
-  deletePhrasesForReference(db: SQLiteDBConnection,reference:  Reference) {
-    return db.query(QUERY_DELETE_PHRASES + reference.id).catch((err) => console.log(err));
+  deletePhrasesForReference(db: SQLiteDBConnection, reference: Reference) {
+    return db
+      .query(QUERY_DELETE_PHRASES + reference.id)
+      .catch((err) => console.log(err));
   }
 
   getPhraseByReference(db: SQLiteDBConnection, ref: number | undefined) {

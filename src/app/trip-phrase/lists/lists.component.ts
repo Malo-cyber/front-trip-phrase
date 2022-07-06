@@ -40,7 +40,6 @@ export class ListsComponent implements OnInit {
   async refreshData() {
     const db = await this.dataBaseService.getDatabaseConnection();
     this.subjects = await this.referenceModelService.getLocalList(db);
-    await db.close();
   }
 
   public async deleteItem(reference : Reference){

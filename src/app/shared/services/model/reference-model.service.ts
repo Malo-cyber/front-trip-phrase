@@ -75,8 +75,7 @@ export class ReferenceModelService {
           subject.phrases
         );
 
-      const resultSubreferences: any =
-        await this.getReferences(db, subject.id);
+      const resultSubreferences: any = await this.getReferences(db, subject.id);
       subject.references = resultSubreferences.values as Reference[];
 
       return Promise.all([
@@ -125,6 +124,15 @@ export class ReferenceModelService {
     await this.phraseModelService.deletePhrasesForReference(db, reference);
     //Effaçage de la reference mère
     await this.deleteOnlyReference(db, reference);
+  }
+
+  public async updateReferencePhrases(
+    db: SQLiteDBConnection,
+    reference: Reference
+  ) {
+    await this.phraseModelService.deletePhrasesForReference(db, reference);
+    const refId = reference.id ? reference.id : -1;
+    await this.phraseModelService.insertPhrase(db, reference.phrases, refId);
   }
 
   public deleteOnlyReference(db: SQLiteDBConnection, reference: Reference) {

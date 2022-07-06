@@ -21,9 +21,10 @@ import { ReferenceModelService } from '../../../shared/services/model/reference-
   styleUrls: ['./traduction.component.sass'],
 })
 export class TraductionComponent implements OnInit {
-  public refSelected: Reference | any;
+  public refSelected: Reference | any = null;
   public headerTitle: string = '';
   public isReadOnly = false;
+  public action: string | null = this.route.snapshot.paramMap.get('action');
 
   constructor(
     private route: ActivatedRoute,
@@ -40,32 +41,58 @@ export class TraductionComponent implements OnInit {
         this.headerTitle = 'Ajouter un thème';
         break;
       case 'add-phrase':
-        this.headerTitle = 'Ajouter une phrase au thème : ' + this.customTranslateService.getTranslationForKey(this.translateService.currentLang, this.refSelected.phrases);
+        this.headerTitle =
+          'Ajouter une phrase au thème : ' +
+          this.customTranslateService.getTranslationForKey(
+            this.translateService.currentLang,
+            this.refSelected.phrases
+          );
         break;
       case 'edit-phrase':
-        this.headerTitle = 'Editer les phrases de : ' + this.customTranslateService.getTranslationForKey(this.translateService.currentLang, this.refSelected.phrases);
+        this.headerTitle =
+          'Editer les phrases de : ' +
+          this.customTranslateService.getTranslationForKey(
+            this.translateService.currentLang,
+            this.refSelected.phrases
+          );
         break;
       case 'edit-subject':
-        this.headerTitle = 'Editer le thème : ' + this.customTranslateService.getTranslationForKey(this.translateService.currentLang, this.refSelected.phrases);
+        this.headerTitle =
+          'Editer le thème : ' +
+          this.customTranslateService.getTranslationForKey(
+            this.translateService.currentLang,
+            this.refSelected.phrases
+          );
         break;
       case 'watch-phrase':
         this.isReadOnly = true;
-        this.headerTitle = 'Phrases de : ' + this.customTranslateService.getTranslationForKey(this.translateService.currentLang, this.refSelected.phrases);
+        this.headerTitle =
+          'Phrases de : ' +
+          this.customTranslateService.getTranslationForKey(
+            this.translateService.currentLang,
+            this.refSelected.phrases
+          );
         break;
       case 'watch-subject':
         this.isReadOnly = true;
-        this.headerTitle = 'Thème : ' + this.customTranslateService.getTranslationForKey(this.translateService.currentLang, this.refSelected.phrases);
+        this.headerTitle =
+          'Thème : ' +
+          this.customTranslateService.getTranslationForKey(
+            this.translateService.currentLang,
+            this.refSelected.phrases
+          );
         break;
     }
   }
 
-  private async getTraductions(){
-    const dbConnection = await this.databaseService.getDatabaseConnection();
-    const ref = await this.referenceModelService.getReferenceById(
-      dbConnection,
-      this.route.snapshot.paramMap.get('id')
-    );
-    this.refSelected = ref;
-    console.log(this.refSelected);
+  private async getTraductions() {
+    if (this.route.snapshot.paramMap.get('id') !== 'subject') {
+      const dbConnection = await this.databaseService.getDatabaseConnection();
+      const ref = await this.referenceModelService.getReferenceById(
+        dbConnection,
+        this.route.snapshot.paramMap.get('id')
+      );
+      this.refSelected = ref;
+    }
   }
 }

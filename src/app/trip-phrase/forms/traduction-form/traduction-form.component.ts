@@ -20,6 +20,7 @@ import { ReferenceModelService } from '../../../shared/services/model/reference-
   styleUrls: ['./traduction-form.component.sass'],
 })
 export class TraductionFormComponent implements OnChanges {
+  public editActions: string[] = ['add-phrase', 'add-subject'];
   public flagPath = FLAGS_PATH;
   public flagExt = FLAG_IMAGE_EXTENSION;
 
@@ -42,6 +43,12 @@ export class TraductionFormComponent implements OnChanges {
    */
   @Input()
   public isReadOnly = false;
+
+  /**
+   * Action en cours
+   */
+  @Input()
+  public action: string | null = '';
 
   /**
    * Formulaire d'ajout de phrases
@@ -70,36 +77,35 @@ export class TraductionFormComponent implements OnChanges {
       startWith(''),
       map((value: any) => this._filterCountry(value))
     );
-    if (this.refSelected?.phrases.length === 0) {
-      !!defaultLangue ? this.addPhraseLine(defaultLangue) : null;
-    } else {
+    if (!this.editActions.includes(this.action ? this.action : '')) {
       this.refSelected?.phrases.map((traduction: Phrase) => {
         const langue = this.getLangueObject(traduction.code_langue);
         !!langue ? this.addPhraseLine(langue, traduction.phrase) : null;
       });
+    } else {
+      !!defaultLangue ? this.addPhraseLine(defaultLangue) : null;
     }
   }
 
   public ngOnChanges() {
-    if (!!this.refSelected) {
-      this.initData();
-    }
+    this.initData();
   }
 
   public getLangueObject(code_langue: string) {
-    return COUNTRIES.find(
-      (country: Country) => country.code === code_langue
-    );
+    return COUNTRIES.find((country: Country) => country.code === code_langue);
   }
 
   public addPhraseLine(langue: Country, texte: string = ''): void {
     if (!!langue && typeof langue !== 'string') {
       if (!this.isLanguageAlreadyAdded(langue)) {
         const linePhraseForm = this.fb.group({
-          texte: [{
-            value: texte,
-            disabled: this.isReadOnly
-        }, Validators.required],
+          texte: [
+            {
+              value: texte,
+              disabled: this.isReadOnly,
+            },
+            Validators.required,
+          ],
           langue: [langue, Validators.required],
         });
         this.phrases.push(linePhraseForm);
@@ -110,6 +116,7 @@ export class TraductionFormComponent implements OnChanges {
 
   public async sendPhrases() {
     const reference: Reference = {
+      id: this.refSelected?.id,
       theme: !!this.refSelected ? this.refSelected.id : null,
       image: '',
       phrases: [],
@@ -121,7 +128,11 @@ export class TraductionFormComponent implements OnChanges {
       } as Phrase);
     });
     const db = await this.databaseService.getDatabaseConnection();
-    await this.referenceModelService.insertReference(db, reference);
+    if (!this.editActions.includes(this.action ? this.action : '')) {
+      await this.referenceModelService.updateReferencePhrases(db, reference);
+    } else {
+      await this.referenceModelService.insertReference(db, reference);
+    }
     await db.close();
     this.router.navigate(['/lists']);
   }
