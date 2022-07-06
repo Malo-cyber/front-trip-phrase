@@ -1,25 +1,22 @@
 <div class="container">
   <app-header [headerTitle]="'home'"></app-header>
   <div class="home-container">
-    <div class="news">
-      <mat-list>
-        News :
-        <mat-list-item>
-          L'éditeur de phrase local est fonctionnel !
-        </mat-list-item>
-      </mat-list>
-      <!-- TODO MODEL AND LOGIC-->
-    </div>
     <div class="config-panel">
-          <app-add-langue-form
-            [parentFormGroup]="addFavoriteLanguagesForm"
-            (addPhraseLine)="addFavorite($event)"
-          ></app-add-langue-form>
-          <div class="country-badges">
-            <div class="favorite-item" *ngFor="let favorite of favorites">
-              <img class="fav-image" [src]="flagPath + favorite.code + flagExt" />
-            </div>
-          </div>
+      <app-add-langue-form
+        [parentFormGroup]="addFavoriteLanguagesForm"
+        (addPhraseLine)="addFavorite($event)"
+      ></app-add-langue-form>
+      <div class="title-wrapper">
+        <h2>Vos langues favorites :</h2>
+      </div>
+      <div class="country-badges">
+        <div class="favorite-item" *ngFor="let favorite of favorites;let index = index">
+          <img class="fav-image" [src]="flagPath + favorite.code + flagExt" />
+          <button mat-mini-fab color="warn" class="delete-button" (click)="deleteFavorite(favorite,index)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <app-footer></app-footer>

@@ -11,7 +11,9 @@ import { COUNTRIES } from '../../../shared/constant/countries';
 import { Country } from '../../../shared/model/country';
 import { Phrase } from '../../../shared/model/phrase';
 import { Reference } from '../../../shared/model/reference';
+import { CustomTranslationService } from '../../../shared/services/custom-translation.service';
 import { DatabaseService } from '../../../shared/services/model/database.service';
+import { FavoriteService } from '../../../shared/services/model/favorite.service';
 import { ReferenceModelService } from '../../../shared/services/model/reference-model.service';
 
 @Component({
@@ -23,7 +25,6 @@ export class TraductionFormComponent implements OnChanges {
   public editActions: string[] = ['add-phrase', 'add-subject'];
   public flagPath = FLAGS_PATH;
   public flagExt = FLAG_IMAGE_EXTENSION;
-
 
   /**
    * Thème selectionné
@@ -55,30 +56,39 @@ export class TraductionFormComponent implements OnChanges {
     private translateService: TranslateService,
     private referenceModelService: ReferenceModelService,
     private databaseService: DatabaseService,
-    private router: Router
+    private customTranslateService: CustomTranslationService,
+    private router: Router,
+    private favoriteService: FavoriteService
   ) {}
 
-  public initData() {
-    const defaultLangue = this.getLangueObject(
+  public async initData() {
+    const defaultLangue = this.customTranslateService.getLangueObject(
       this.translateService.currentLang
     );
 
     if (!this.editActions.includes(this.action ? this.action : '')) {
       this.refSelected?.phrases.map((traduction: Phrase) => {
-        const langue = this.getLangueObject(traduction.code_langue);
+        const langue = this.customTranslateService.getLangueObject(
+          traduction.code_langue
+        );
         !!langue ? this.addPhraseLine(langue, traduction.phrase) : null;
       });
     } else {
       !!defaultLangue ? this.addPhraseLine(defaultLangue) : null;
+      const db = await this.databaseService.getDatabaseConnection();
+      const favorites: any = await this.favoriteService.getFavorites(db);
+      favorites.values.map((favorite: any) => {
+        const langue = this.customTranslateService.getLangueObject(
+          favorite.code_langue
+        );
+        !!langue && langue.code !== this.translateService.currentLang ? this.addPhraseLine(langue) : null;
+      });
+      await db.close();
     }
   }
 
   public ngOnChanges() {
     this.initData();
-  }
-
-  public getLangueObject(code_langue: string) {
-    return COUNTRIES.find((country: Country) => country.code === code_langue);
   }
 
   public addPhraseLine(langue: Country, texte: string = ''): void {
@@ -131,7 +141,6 @@ export class TraductionFormComponent implements OnChanges {
   public displayNameLangue(country: Country) {
     return country && country.name ? country.name : '';
   }
-
 
   public deleteLine(index: number): void {
     this.phrases.removeAt(index);

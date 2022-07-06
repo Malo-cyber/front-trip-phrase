@@ -39,10 +39,11 @@ export class DatabaseService {
     await this.favoriteService.initDataInsert(db);
     await this.configService.initDataInsert(db);
     const res: any = await this.configService.getModeApp(db);
-    res.values[0].value === 'true'
+    if(res.values.length === 1){
+      res.values[0].value === 'true'
       ? this.darkModeService.toggleDarkMode()
       : this.darkModeService.toggleLightMode();
-    console.log(res);
+    }
     await db.close();
   }
 
