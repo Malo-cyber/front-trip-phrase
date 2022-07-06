@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { TraductionComponent } from './lists/traduction/traduction.component';
 import { TraductionFormComponent } from './forms/traduction-form/traduction-form.component';
+import { AddLangueFormComponent } from './forms/add-langue-form/add-langue-form.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { TraductionFormComponent } from './forms/traduction-form/traduction-form
     ListsComponent,
     HomeComponent,
     TraductionComponent,
-    TraductionFormComponent
+    TraductionFormComponent,
+    AddLangueFormComponent
   ],
   imports: [
     TranslateModule,

@@ -23,7 +23,6 @@ const QUERY_DELETE_REFERENCE = 'DELETE FROM REFERENCES_KEY WHERE id=';
   providedIn: 'root',
 })
 export class ReferenceModelService {
-  localTraductionList: Reference[] = [];
   constructor(
     private phraseModelService: PhraseModelService,
     public customTranslateService: CustomTranslationService,

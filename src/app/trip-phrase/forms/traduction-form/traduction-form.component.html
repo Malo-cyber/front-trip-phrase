@@ -1,38 +1,9 @@
 <div [formGroup]="addPhraseForm">
-  <mat-toolbar *ngIf="!this.isReadOnly" color="accent" class="add-phrase-line">
-    <!-- AUTOCOMPLETE LANGUAGE-->
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Langue</mat-label>
-      <input
-        type="text"
-        placeholder="Indiquer la langue"
-        aria-label="Indiquer la langue"
-        matInput
-        formControlName="langControl"
-        [matAutocomplete]="auto"
-      />
-      <mat-autocomplete
-        [displayWith]="displayNameLangue"
-        autoActiveFirstOption
-        #auto="matAutocomplete"
-      >
-        <mat-option
-          *ngFor="let option of filteredOptionsCountries | async"
-          [value]="option"
-        >
-          {{ option.name }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <!-- ADD LINE BUTTON-->
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="addPhraseLine(addPhraseForm.controls['langControl'].value)"
-    >
-      Ajouter
-    </button>
-  </mat-toolbar>
+  <app-add-langue-form
+    *ngIf="!this.isReadOnly"
+    [parentFormGroup]="addPhraseForm"
+    (addPhraseLine)="addPhraseLine($event)"
+  ></app-add-langue-form>
   <div class="phrases-form">
     <div
       formArrayName="phrases"
