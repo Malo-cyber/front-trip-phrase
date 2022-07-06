@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">front-trip-phrase</string>
-    <string name="title_activity_main">front-trip-phrase</string>
+    <string name="app_name">Trip Phrase</string>
+    <string name="title_activity_main">Trip Phrase</string>
     <string name="package_name">com.malotoq.phrasetrip</string>
     <string name="custom_url_scheme">com.malotoq.phrasetrip</string>
 </resources>

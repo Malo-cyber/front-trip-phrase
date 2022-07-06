@@ -11,7 +11,7 @@ import { SQLiteService } from './shared/services/model/sqlite.service';
   styleUrls: ['./app.component.sass'],
 })
 export class AppComponent{
-  title = 'front-trip-phrase';
+  title = 'Trip Phrase';
   public isWeb = true;
   private PLATFORM: string = Capacitor.getPlatform();
   private PLATFORMS: string[] = ['android', 'ios'];
