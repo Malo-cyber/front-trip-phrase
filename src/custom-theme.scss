@@ -228,3 +228,7 @@ $primary: mat-palette($theme-primary, 'main', 200, 200);
   background-color: mat-color($primary);
   color: $light-primary-text;
 }
+
+#panel-lists mat-expansion-panel-body{
+  padding: 0;
+}

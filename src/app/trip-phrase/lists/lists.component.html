@@ -10,6 +10,7 @@
       {{ "add-subject" | translate }}
     </button>
     <mat-expansion-panel
+      id="panel-lists"
       mat-tab-content
       class="subject"
       *ngFor="let subject of subjects"
@@ -30,7 +31,7 @@
             aria-label="Watch subject"
           >
             <mat-icon>remove_red_eye</mat-icon>
-            <span>Voir</span>
+            <span>Voir les traductions</span>
           </button>
         <button
           [routerLink]="'edit-subject/' + subject.id"
@@ -57,6 +58,7 @@
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <div class="expansion-wrapper">
       <button
         mat-raised-button
         color="primary"
@@ -65,12 +67,11 @@
       >
         {{ "add-phrase-button" | translate }}
       </button>
-      <mat-list
+      <div
         *ngIf="subject && subject.references && subject.references.length > 0"
         class="trad-list"
       >
-        Liste des phrases :
-        <mat-list-item *ngFor="let reference of subject.references">
+        <div *ngFor="let reference of subject.references">
           <a class="traductions"
             >{{
               customTranslateService.getTranslationForKey(
@@ -80,7 +81,7 @@
             }}
           </a>
           <div class="buttons-wrapper">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu actions">
+            <button mat-mini-fab color="accent" [matMenuTriggerFor]="menu" aria-label="Menu actions">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -91,7 +92,7 @@
               aria-label="Watch phrase"
             >
               <mat-icon>remove_red_eye</mat-icon>
-              <span>Voir</span>
+              <span>Voir les traductions</span>
             </button>
             <button
               [routerLink]="'edit-phrase/' + reference.id"
@@ -113,11 +114,12 @@
             </button>
             </mat-menu>
           </div>
-        </mat-list-item>
-      </mat-list>
+        </div>
+      </div>
       <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">
         Aucune phrase d'enregistrée.
-      </div>
+      </div> 
+    </div>
     </mat-expansion-panel>
   </div>
   <app-footer></app-footer>
