@@ -34,14 +34,8 @@ IOS : Avoir xCode
 
 Android : Avoir Android Studio
 
-npm run build => va copier le contenu du site dans les plateformes conernées (android/ios)
+npm run build => va copier le contenu du site dans les plateformes conçernées (android/ios)
 
-npx cap open android 
+npx cap open android => ouvrir android studio pour builder l'apk
 
-npx cap open ios
-
-
-en fonction du build voulu choisir ios ou android 
-
-
-dans xCode ou Android Studio faire la tambouille
+npx cap open ios => ouvrir xCode pour builder l'apk
