@@ -12,7 +12,6 @@ import { SQLiteService } from './sqlite.service';
   providedIn: 'root',
 })
 export class DatabaseService {
-  public databaseConnection: SQLiteDBConnection | undefined;
 
   constructor(
     private sqlite: SQLiteService,
@@ -39,26 +38,30 @@ export class DatabaseService {
     await this.favoriteService.initDataInsert(db);
     await this.configService.initDataInsert(db);
     const res: any = await this.configService.getModeApp(db);
-    if(res.values.length === 1){
+    if (!!res && res.values.length === 1) {
       res.values[0].value === 'true'
-      ? this.darkModeService.toggleDarkMode()
-      : this.darkModeService.toggleLightMode();
+        ? this.darkModeService.toggleDarkMode()
+        : this.darkModeService.toggleLightMode();
     }
     await db.close();
   }
 
   public async getDatabaseConnection(): Promise<SQLiteDBConnection> {
-    if (!this.databaseConnection) {
+    let databaseConnection = await this.sqlite.retrieveConnection( 'trip-phrase.db').catch(()=> undefined);
+    if (!databaseConnection) {
       const jeepSqliteEl = document.querySelector('jeep-sqlite');
       await jeepSqliteEl?.isStoreOpen();
-      this.databaseConnection = await this.sqlite.createConnection(
+      databaseConnection = await this.sqlite.createConnection(
         'trip-phrase.db',
         false,
         'no-encryption',
         0
       );
+    } 
+    const isDbOpen = await databaseConnection.isDBOpen();
+    if (!isDbOpen.result) {
+      await databaseConnection.open();
     }
-    await this.databaseConnection.open();
-    return this.databaseConnection;
+    return databaseConnection;
   }
 }
