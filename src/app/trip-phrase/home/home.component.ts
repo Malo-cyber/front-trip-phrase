@@ -33,9 +33,11 @@ export class HomeComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    const db = await this.databaseService.getDatabaseConnection();
-    const result: any = await this.favoriteService.getFavorites(db);
-    this.favorites = result.values.map((result : any) => this.customTranslationService.getLangueObject(result.code_langue));
+      const db = await this.databaseService.getDatabaseConnection();
+      const result: any = await this.favoriteService.getFavorites(db);
+      this.favorites = result.values.map((result: any) =>
+        this.customTranslationService.getLangueObject(result.code_langue)
+      );
   }
   public async addFavorite(country: Country) {
     if (!!country) {

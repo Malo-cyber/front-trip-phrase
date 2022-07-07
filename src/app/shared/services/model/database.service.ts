@@ -13,6 +13,8 @@ import { SQLiteService } from './sqlite.service';
 })
 export class DatabaseService {
 
+public databaseConnection : SQLiteDBConnection | undefined
+
   constructor(
     private sqlite: SQLiteService,
     private phraseModel: PhraseModelService,
@@ -47,21 +49,17 @@ export class DatabaseService {
   }
 
   public async getDatabaseConnection(): Promise<SQLiteDBConnection> {
-    let databaseConnection = await this.sqlite.retrieveConnection( 'trip-phrase.db').catch(()=> undefined);
-    if (!databaseConnection) {
+    if (!this.databaseConnection) {
       const jeepSqliteEl = document.querySelector('jeep-sqlite');
       await jeepSqliteEl?.isStoreOpen();
-      databaseConnection = await this.sqlite.createConnection(
+      this.databaseConnection = await this.sqlite.createConnection(
         'trip-phrase.db',
         false,
         'no-encryption',
-        0
+        1
       );
     } 
-    const isDbOpen = await databaseConnection.isDBOpen();
-    if (!isDbOpen.result) {
-      await databaseConnection.open();
-    }
-    return databaseConnection;
+    await this.databaseConnection.open();
+    return this.databaseConnection;
   }
 }

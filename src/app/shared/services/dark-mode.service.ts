@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ConfigService } from './model/config.service';
-import { DatabaseService } from './model/database.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DarkModeService {
-  public darkModeActivated :BehaviorSubject<boolean> =new BehaviorSubject<boolean>(false);
+  public darkModeActivated :BehaviorSubject<boolean> =new BehaviorSubject<boolean>(true);
 
   constructor() {
 

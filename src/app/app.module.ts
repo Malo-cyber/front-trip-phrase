@@ -10,7 +10,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SQLiteService } from './shared/services/model/sqlite.service';
 import { JeepSqlite } from 'jeep-sqlite';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
+import { DatabaseService } from './shared/services/model/database.service';
+import { SharedModule } from './shared/shared.module';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -31,11 +32,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     TripPhraseModule,
+    SharedModule.forRoot(),
   ],
   providers: [
+    DatabaseService,
     SQLiteService,
     JeepSqlite,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

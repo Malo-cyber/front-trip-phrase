@@ -25,8 +25,8 @@ import { AddLangueFormComponent } from './forms/add-langue-form/add-langue-form.
   ],
   imports: [
     TranslateModule,
-    SharedModule,
-    TripPhraseRoutingModule
+    TripPhraseRoutingModule,
+    SharedModule
   ]
 })
 export class TripPhraseModule { }
