@@ -11,10 +11,12 @@
       </div>
       <div class="country-badges">
         <div class="favorite-item" *ngFor="let favorite of favorites;let index = index">
-          <img class="fav-image" [src]="flagPath + favorite.code + flagExt" />
-          <button mat-mini-fab color="warn" class="delete-button" (click)="deleteFavorite(favorite,index)">
-            <mat-icon>delete</mat-icon>
-          </button>
+          <div class="fav-wrapper">
+            <button mat-mini-fab color="warn" class="delete-button" (click)="deleteFavorite(favorite,index)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          <img class="fav-image" [src]="flagPath + favorite.code + flagExt" >
+        </div>
         </div>
       </div>
     </div>
