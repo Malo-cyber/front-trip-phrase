@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { SQLiteDBConnection } from '@capacitor-community/sqlite';
-import { Platform } from '@ionic/angular';
-import { DarkModeService } from '../dark-mode.service';
+import { Observable, of } from 'rxjs';
 import { ConfigService } from './config.service';
 import { FavoriteService } from './favorite.service';
 import { PhraseModelService } from './phrase-model.service';
@@ -11,24 +11,20 @@ import { SQLiteService } from './sqlite.service';
 @Injectable({
   providedIn: 'root',
 })
-export class DatabaseService {
+export class DatabaseService implements Resolve<any> {
+  public isDataInit: Observable<boolean> = of(false);
 
-public databaseConnection : SQLiteDBConnection | undefined
+  public databaseConnection: SQLiteDBConnection | undefined;
 
   constructor(
     private sqlite: SQLiteService,
     private phraseModel: PhraseModelService,
     private referenceModel: ReferenceModelService,
     private favoriteService: FavoriteService,
-    private configService: ConfigService,
-    private platform: Platform,
-    private darkModeService: DarkModeService
-  ) {
-    this.platform.ready().then(async () => {
-      this.sqlite.initializePlugin().then(async (ret) => {
-        this.initData();
-      });
-    });
+    private configService: ConfigService
+  ) {}
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    return this.initData();
   }
 
   public async initData() {
@@ -39,26 +35,23 @@ public databaseConnection : SQLiteDBConnection | undefined
     await this.referenceModel.insertRefInit(db);
     await this.favoriteService.initDataInsert(db);
     await this.configService.initDataInsert(db);
-    const res: any = await this.configService.getModeApp(db);
-    if (!!res && res.values.length === 1) {
-      res.values[0].value === 'true'
-        ? this.darkModeService.toggleDarkMode()
-        : this.darkModeService.toggleLightMode();
-    }
+    await this.favoriteService.getFavorites(db);
+    await this.configService.getModeApp(db);
     await db.close();
+    this.isDataInit = of(true);
   }
 
   public async getDatabaseConnection(): Promise<SQLiteDBConnection> {
+    const jeepSqliteEl = document.querySelector('jeep-sqlite');
+    await jeepSqliteEl?.isStoreOpen();
     if (!this.databaseConnection) {
-      const jeepSqliteEl = document.querySelector('jeep-sqlite');
-      await jeepSqliteEl?.isStoreOpen();
       this.databaseConnection = await this.sqlite.createConnection(
         'trip-phrase.db',
         false,
         'no-encryption',
         1
       );
-    } 
+    }
     await this.databaseConnection.open();
     return this.databaseConnection;
   }

@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {
-  FLAGS_PATH,
   FLAGS_PATH_SQUARE,
   FLAG_IMAGE_EXTENSION,
 } from '../../shared/constant/config';
 import { Country } from '../../shared/model/country';
-import { CustomTranslationService } from '../../shared/services/custom-translation.service';
 import { DatabaseService } from '../../shared/services/model/database.service';
 import { FavoriteService } from '../../shared/services/model/favorite.service';
 
@@ -28,17 +33,13 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private databaseService: DatabaseService,
-    private favoriteService: FavoriteService,
-    private customTranslationService: CustomTranslationService
+    private favoriteService: FavoriteService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-      const db = await this.databaseService.getDatabaseConnection();
-      const result: any = await this.favoriteService.getFavorites(db);
-      this.favorites = result.values.map((result: any) =>
-        this.customTranslationService.getLangueObject(result.code_langue)
-      );
+  ngOnInit() {
+    this.favorites = this.favoriteService.favorites;
   }
+
   public async addFavorite(country: Country) {
     if (!!country) {
       if (!this.isInFavorites(country.code)) {

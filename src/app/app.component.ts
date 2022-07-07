@@ -39,6 +39,7 @@ export class AppComponent{
             await this.sqlite.initWebStore();
           } 
         }
+        this.databaseService.initData();
       });
     });
   }

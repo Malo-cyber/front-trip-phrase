@@ -10,6 +10,7 @@ import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { DatabaseService } from './services/model/database.service';
+import { FavoriteService } from './services/model/favorite.service';
 
 @NgModule({
   declarations: [FooterComponent, HeaderComponent,TruncatePipe],
@@ -31,7 +32,8 @@ export class SharedModule {
     return {
       ngModule: SharedModule,
       providers: [
-        DatabaseService
+        DatabaseService,
+        FavoriteService
       ]
     };
   }
