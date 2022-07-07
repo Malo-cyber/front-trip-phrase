@@ -37,7 +37,13 @@ const routes: Routes = [
       loaded: DatabaseService,
     },
   },
-  { path: 'settings', component: SettingsComponent },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    resolve: {
+      loaded: DatabaseService,
+    },
+  },
   {
     path: 'lists/:action/:id',
     component: TraductionComponent,

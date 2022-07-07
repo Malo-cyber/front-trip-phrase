@@ -37,6 +37,7 @@ export class DatabaseService implements Resolve<any> {
     await this.configService.initDataInsert(db);
     await this.favoriteService.getFavorites(db);
     await this.configService.getModeApp(db);
+    await this.configService.getCurrentLang(db);
     await db.close();
     this.isDataInit = of(true);
   }

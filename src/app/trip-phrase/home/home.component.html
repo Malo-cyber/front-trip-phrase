@@ -7,7 +7,7 @@
         (addPhraseLine)="addFavorite($event)"
       ></app-add-langue-form>
       <div class="title-wrapper">
-        <h2>Vos langues favorites :</h2>
+        <h2>{{ 'fav-languages' | translate}}</h2>
       </div>
       <div class="country-badges">
         <div class="favorite-item" *ngFor="let favorite of favorites;let index = index">

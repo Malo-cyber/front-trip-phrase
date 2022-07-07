@@ -1,15 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, startWith, map, Subject } from 'rxjs';
-import {
-  FLAGS_PATH,
-  FLAG_IMAGE_EXTENSION,
-} from '../../../shared/constant/config';
-import { COUNTRIES } from '../../../shared/constant/countries';
-import { Country } from '../../../shared/model/country';
-import { Phrase } from '../../../shared/model/phrase';
+import { tap } from 'rxjs';
 import { Reference } from '../../../shared/model/reference';
 import { CustomTranslationService } from '../../../shared/services/custom-translation.service';
 import { DatabaseService } from '../../../shared/services/model/database.service';
@@ -35,52 +27,38 @@ export class TraductionComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.getTraductions();
+    const stringSuject: string | undefined = await this.getTraductions();
     switch (this.route.snapshot.paramMap.get('action')) {
       case 'add-subject':
-        this.headerTitle = 'Ajouter un thème';
+        this.headerTitle = 'add-subject';
         break;
       case 'add-phrase':
-        this.headerTitle =
-          'Ajouter une phrase au thème : ' +
-          this.customTranslateService.getTranslationForKey(
-            this.translateService.currentLang,
-            this.refSelected.phrases
-          );
+        this.translateService
+          .get('add-phrase')
+          .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .subscribe();
         break;
       case 'edit-phrase':
-        this.headerTitle =
-          'Editer les phrases de : ' +
-          this.customTranslateService.getTranslationForKey(
-            this.translateService.currentLang,
-            this.refSelected.phrases
-          );
+        this.translateService
+        .get('edit-phrase')
+        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
         break;
       case 'edit-subject':
-        this.headerTitle =
-          'Editer le thème : ' +
-          this.customTranslateService.getTranslationForKey(
-            this.translateService.currentLang,
-            this.refSelected.phrases
-          );
+        this.translateService
+        .get('edit-subject')
+        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
         break;
       case 'watch-phrase':
         this.isReadOnly = true;
-        this.headerTitle =
-          'Phrases de : ' +
-          this.customTranslateService.getTranslationForKey(
-            this.translateService.currentLang,
-            this.refSelected.phrases
-          );
+        this.translateService
+        .get('watch-phrase')
+        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
         break;
       case 'watch-subject':
         this.isReadOnly = true;
-        this.headerTitle =
-          'Thème : ' +
-          this.customTranslateService.getTranslationForKey(
-            this.translateService.currentLang,
-            this.refSelected.phrases
-          );
+        this.translateService
+        .get('subject')
+        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
         break;
     }
   }
@@ -93,6 +71,11 @@ export class TraductionComponent implements OnInit {
         this.route.snapshot.paramMap.get('id')
       );
       this.refSelected = ref;
+      return this.customTranslateService.getTranslationForKey(
+        this.translateService.currentLang,
+        this.refSelected.phrases
+      );
     }
+    return '';
   }
 }

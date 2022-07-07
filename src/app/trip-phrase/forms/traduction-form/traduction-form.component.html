@@ -13,7 +13,7 @@
       <div class="line-wrapper" [formGroupName]="i" fxLayout="row">
         <img [src]="flagPath + phrase.value.langue.code + flagExt" />
         <mat-form-field fxFlex class="input-phrase-form" appearance="fill">
-          <mat-label>Phrase</mat-label>
+          <mat-label>{{ 'phrase' | translate }}</mat-label>
           <textarea
             matInput
             formControlName="texte"
@@ -28,7 +28,6 @@
             *ngIf="i !== 0 && !this.isReadOnly"
             mat-fab
             color="warn"
-            aria-label="Effaçer la ligne"
             (click)="deleteLine(i)"
           >
             <mat-icon>delete</mat-icon>
@@ -44,7 +43,7 @@
       color="accent"
       [routerLink]="'/lists'"
     >
-      Retour
+      {{'cancel' | translate}}
     </button>
     <button
       *ngIf="!this.isReadOnly"
@@ -54,7 +53,7 @@
       color="primary"
       [disabled]="!addPhraseForm.valid"
     >
-      Envoyer
+      {{'add' | translate}}
     </button>
   </div>
 </div>

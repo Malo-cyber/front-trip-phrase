@@ -1,7 +1,23 @@
 <div class="container">
   <app-header [headerTitle]="'settings'"></app-header>
   <div class="settings">
-    <mat-slide-toggle [checked]="darkModeService.darkModeActivated | async" (change)="toggleDarkOrLightMode()" >{{ "dark-mode" | translate }}</mat-slide-toggle>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "language-management" | translate }}</mat-label>
+      <mat-select
+        [(ngModel)]="currentLang"
+        (selectionChange)="toggleLanguage($event)"
+      >
+        <mat-option *ngFor="let langue of avalaibleLanguages" [value]="langue">
+          <img class="select-image" [src]="flagPath + langue.code + flagExt" />
+          <span class="select-text">{{ langue.name }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slide-toggle
+      [checked]="darkModeService.darkModeActivated | async"
+      (change)="toggleDarkOrLightMode()"
+      >{{ "dark-mode" | translate }}</mat-slide-toggle
+    >
   </div>
   <app-footer></app-footer>
 </div>

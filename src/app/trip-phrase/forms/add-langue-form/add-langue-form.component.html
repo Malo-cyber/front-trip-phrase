@@ -1,34 +1,29 @@
 <mat-toolbar [formGroup]="parentFormGroup" class="add-phrase-line">
-    <!-- AUTOCOMPLETE LANGUAGE-->
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Langue</mat-label>
-      <input
-        type="text"
-        placeholder="Indiquer la langue"
-        aria-label="Indiquer la langue"
-        matInput
-        formControlName="LANGUAGE_SELECTION"
-        [matAutocomplete]="auto"
-      />
-      <mat-autocomplete
-        [displayWith]="displayNameLangue"
-        autoActiveFirstOption
-        #auto="matAutocomplete"
-      >
-        <mat-option
-          *ngFor="let option of filteredOptionsCountries | async"
-          [value]="option"
-        >
-          {{ option.name }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-    <!-- ADD LINE BUTTON-->
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="sendLangueSelected()"
+  <!-- AUTOCOMPLETE LANGUAGE-->
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>{{ "langue" | translate }}</mat-label>
+    <input
+      type="text"
+      placeholder="{{ 'add-langue-placeholder' | translate }}"
+      matInput
+      formControlName="LANGUAGE_SELECTION"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      [displayWith]="displayNameLangue"
+      autoActiveFirstOption
+      #auto="matAutocomplete"
     >
-      Ajouter
-    </button>
-  </mat-toolbar>
+      <mat-option
+        *ngFor="let option of filteredOptionsCountries | async"
+        [value]="option"
+      >
+        {{ option.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <!-- ADD LINE BUTTON-->
+  <button mat-raised-button color="primary" (click)="sendLangueSelected()">
+    {{ "add" | translate }}
+  </button>
+</mat-toolbar>

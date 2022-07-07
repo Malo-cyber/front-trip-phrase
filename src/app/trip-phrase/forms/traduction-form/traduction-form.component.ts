@@ -1,13 +1,11 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, startWith, map } from 'rxjs';
 import {
   FLAGS_PATH,
   FLAG_IMAGE_EXTENSION,
 } from '../../../shared/constant/config';
-import { COUNTRIES } from '../../../shared/constant/countries';
 import { Country } from '../../../shared/model/country';
 import { Phrase } from '../../../shared/model/phrase';
 import { Reference } from '../../../shared/model/reference';

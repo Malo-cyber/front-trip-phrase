@@ -16,110 +16,117 @@
       *ngFor="let subject of subjects"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title>{{
-            subject.currentLangtrad
-          }}
+        <mat-panel-title
+          >{{ subject.currentLangtrad }}
           <div class="buttons-wrapper">
-            <button (click)="$event.stopPropagation();" mat-icon-button [matMenuTriggerFor]="menuSubject" aria-label="Menu actions subject">
+            <button
+              (click)="$event.stopPropagation()"
+              mat-icon-button
+              [matMenuTriggerFor]="menuSubject"
+              aria-label="Menu actions subject"
+            >
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menuSubject="matMenu">
-            <button
-            [routerLink]="'watch-subject/' + subject.id"
-            mat-menu-item
-            color="accent"
-            aria-label="Watch subject"
-          >
-            <mat-icon>remove_red_eye</mat-icon>
-            <span>Voir les traductions</span>
-          </button>
-        <button
-          [routerLink]="'edit-subject/' + subject.id"
-          mat-menu-item
-          color="accent"
-          aria-label="Edit subject"
-        >
-          <mat-icon>edit</mat-icon>
-          <span>Modifier</span>
-        </button>
-        <button
-          *ngIf="subject?.references?.length === 0"
-          (click)="deleteItem(subject)"
-          mat-menu-item
-          color="accent"
-          aria-label="Delete phrase"
-        >
-          <mat-icon>delete</mat-icon>
-          <span>Supprimer</span>
-        </button>
-
+              <button
+                [routerLink]="'watch-subject/' + subject.id"
+                mat-menu-item
+                color="accent"
+                aria-label="Watch subject"
+              >
+                <mat-icon>remove_red_eye</mat-icon>
+                <span>{{ "watch-trads" | translate }}</span>
+              </button>
+              <button
+                [routerLink]="'edit-subject/' + subject.id"
+                mat-menu-item
+                color="accent"
+                aria-label="Edit subject"
+              >
+                <mat-icon>edit</mat-icon>
+                <span>{{ "edit" | translate }}</span>
+              </button>
+              <button
+                *ngIf="subject?.references?.length === 0"
+                (click)="deleteItem(subject)"
+                mat-menu-item
+                color="accent"
+                aria-label="Delete phrase"
+              >
+                <mat-icon>delete</mat-icon>
+                <span>{{ "delete" | translate }}</span>
+              </button>
             </mat-menu>
-
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="expansion-wrapper">
-      <button
-        mat-raised-button
-        color="primary"
-        class="add-button"
-        [routerLink]="'add-phrase/' + subject.id"
-      >
-        {{ "add-phrase-button" | translate }}
-      </button>
-      <div
-        *ngIf="subject && subject.references && subject.references.length > 0"
-        class="trad-list"
-      >
-        <div *ngFor="let reference of subject.references">
-          <a class="traductions"
-            >{{
-              customTranslateService.getTranslationForKey(
-                "fr",
-                reference.phrases
-              )
-            }}
-          </a>
-          <div class="buttons-wrapper">
-            <button mat-mini-fab color="accent" [matMenuTriggerFor]="menu" aria-label="Menu actions">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-            <button
-              [routerLink]="'watch-phrase/' + reference.id"
-              mat-menu-item
-              color="accent"
-              aria-label="Watch phrase"
-            >
-              <mat-icon>remove_red_eye</mat-icon>
-              <span>Voir les traductions</span>
-            </button>
-            <button
-              [routerLink]="'edit-phrase/' + reference.id"
-              mat-menu-item
-              color="accent"
-              aria-label="Edit phrase"
-            >
-              <mat-icon>edit</mat-icon>
-              <span>Modifier</span>
-            </button>
-            <button
-              (click)="deleteItem(reference)"
-              mat-menu-item
-              color="accent"
-              aria-label="Delete phrase"
-            >
-              <mat-icon>delete</mat-icon>
-              <span>Supprimer</span>
-            </button>
-            </mat-menu>
+        <button
+          mat-raised-button
+          color="primary"
+          class="add-button"
+          [routerLink]="'add-phrase/' + subject.id"
+        >
+          {{ "add-phrase-button" | translate }}
+        </button>
+        <div
+          *ngIf="subject && subject.references && subject.references.length > 0"
+          class="trad-list"
+        >
+          <div *ngFor="let reference of subject.references">
+            <a class="traductions"
+              >{{
+                customTranslateService.getTranslationForKey(
+                  this.translateService.currentLang,
+                  reference.phrases
+                )
+              }}
+            </a>
+            <div class="buttons-wrapper">
+              <button
+                mat-mini-fab
+                color="accent"
+                [matMenuTriggerFor]="menu"
+                aria-label="Menu actions"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button
+                  [routerLink]="'watch-phrase/' + reference.id"
+                  mat-menu-item
+                  color="accent"
+                  aria-label="Watch phrase"
+                >
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span>{{ "watch-trads" | translate }}</span>
+                </button>
+                <button
+                  [routerLink]="'edit-phrase/' + reference.id"
+                  mat-menu-item
+                  color="accent"
+                  aria-label="Edit phrase"
+                >
+                  <mat-icon>edit</mat-icon>
+                  <span>{{ "edit" | translate }}</span>
+                </button>
+                <button
+                  (click)="deleteItem(reference)"
+                  mat-menu-item
+                  color="accent"
+                  aria-label="Delete phrase"
+                >
+                  <mat-icon>delete</mat-icon>
+                  <span>{{ "delete" | translate }}</span>
+                </button>
+              </mat-menu>
+            </div>
           </div>
         </div>
+        <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">
+         {{ 'no-text-recorded' | translate}}
+        </div>
       </div>
-      <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">
-        Aucune phrase d'enregistrée.
-      </div> 
-    </div>
     </mat-expansion-panel>
   </div>
   <app-footer></app-footer>
