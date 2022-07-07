@@ -40,25 +40,29 @@ export class TraductionComponent implements OnInit {
         break;
       case 'edit-phrase':
         this.translateService
-        .get('edit-phrase')
-        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .get('edit-phrase')
+          .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .subscribe();
         break;
       case 'edit-subject':
         this.translateService
-        .get('edit-subject')
-        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .get('edit-subject')
+          .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .subscribe();
         break;
       case 'watch-phrase':
         this.isReadOnly = true;
         this.translateService
-        .get('watch-phrase')
-        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .get('watch-phrase')
+          .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .subscribe();
         break;
       case 'watch-subject':
         this.isReadOnly = true;
         this.translateService
-        .get('subject')
-        .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .get('subject')
+          .pipe(tap((value) => (this.headerTitle = value + stringSuject)))
+          .subscribe();
         break;
     }
   }

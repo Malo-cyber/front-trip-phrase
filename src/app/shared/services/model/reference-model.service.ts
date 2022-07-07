@@ -73,7 +73,6 @@ export class ReferenceModelService {
           this.translateService.currentLang,
           subject.phrases
         );
-
       const resultSubreferences: any = await this.getReferences(db, subject.id);
       subject.references = resultSubreferences.values as Reference[];
 
@@ -84,7 +83,13 @@ export class ReferenceModelService {
               db,
               reference.id
             );
-          return (reference.phrases = results.values as Phrase[]);
+            reference.phrases = results.values as Phrase[]
+            reference.currentLangtrad =
+            this.customTranslateService.getTranslationForKey(
+              this.translateService.currentLang,
+              reference.phrases
+            );
+          return reference;
         }),
       ]);
     });

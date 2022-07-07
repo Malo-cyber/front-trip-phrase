@@ -76,10 +76,7 @@
           <div *ngFor="let reference of subject.references">
             <a class="traductions"
               >{{
-                customTranslateService.getTranslationForKey(
-                  this.translateService.currentLang,
-                  reference.phrases
-                )
+                reference.currentLangtrad
               }}
             </a>
             <div class="buttons-wrapper">
@@ -124,7 +121,7 @@
           </div>
         </div>
         <div *ngIf="subject?.references?.length === 0" class="no-phrase-text">
-         {{ 'no-text-recorded' | translate}}
+          {{ "no-text-recorded" | translate }}
         </div>
       </div>
     </mat-expansion-panel>

@@ -24,5 +24,6 @@
   "watch-trads": "Voir les traductions",
   "edit": "Modifier",
   "delete": "Supprimer",
-  "no-text-recorded": " Aucune phrase d'enregistrée."
+  "no-text-recorded": " Aucune phrase d'enregistrée.",
+  "NO_TRAD_CURRENT_LANGUAGE": "PAS DE TRADUCTION"
 }
