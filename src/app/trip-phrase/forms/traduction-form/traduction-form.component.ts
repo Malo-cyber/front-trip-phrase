@@ -75,15 +75,14 @@ export class TraductionFormComponent implements OnChanges {
       });
     } else {
       !!defaultLangue ? this.addPhraseLine(defaultLangue) : null;
-      const db = await this.databaseService.getDatabaseConnection();
-      const favorites: any = await this.favoriteService.getFavorites(db);
-      favorites.values.map((favorite: any) => {
+      this.favoriteService.favorites.map((favorite: Country) => {
         const langue = this.customTranslateService.getLangueObject(
-          favorite.code_langue
+          favorite.code
         );
-        !!langue && langue.code !== this.translateService.currentLang ? this.addPhraseLine(langue) : null;
+        !!langue && langue.code !== this.translateService.currentLang
+          ? this.addPhraseLine(langue)
+          : null;
       });
-      await db.close();
     }
   }
 

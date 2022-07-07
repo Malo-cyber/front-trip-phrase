@@ -16,11 +16,35 @@ const routes: Routes = [
       loaded: DatabaseService,
     },
   },
-  { path: 'buy', component: BuyComponent },
-  { path: 'learn', component: LearnComponent },
-  { path: 'lists', component: ListsComponent },
+  {
+    path: 'buy',
+    component: BuyComponent,
+    resolve: {
+      loaded: DatabaseService,
+    },
+  },
+  {
+    path: 'learn',
+    component: LearnComponent,
+    resolve: {
+      loaded: DatabaseService,
+    },
+  },
+  {
+    path: 'lists',
+    component: ListsComponent,
+    resolve: {
+      loaded: DatabaseService,
+    },
+  },
   { path: 'settings', component: SettingsComponent },
-  { path: 'lists/:action/:id', component: TraductionComponent },
+  {
+    path: 'lists/:action/:id',
+    component: TraductionComponent,
+    resolve: {
+      loaded: DatabaseService,
+    },
+  },
 ];
 
 @NgModule({
