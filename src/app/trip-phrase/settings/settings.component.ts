@@ -32,7 +32,6 @@ export class SettingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.translateService.currentLang);
     this.currentLang = this.customTranslateService.getLangueObject(this.translateService.currentLang);
     this.avalaibleLanguages = LANGUAGES_AVALAIBLE.map((value: string) =>
       this.customTranslateService.getLangueObject(value)
@@ -58,5 +57,6 @@ export class SettingsComponent implements OnInit {
     await db.close();
     this.translateService.setDefaultLang(langue.code);
     this.translateService.use(langue.code);
+    this.currentLang = this.customTranslateService.getLangueObject(langue.code);
   }
 }
