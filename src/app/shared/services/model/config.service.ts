@@ -54,7 +54,6 @@ export class ConfigService {
 async getCurrentLang(db: SQLiteDBConnection){
   const results : any = await db
   .query(QUERY_GET_CURRENT_LANG);
-  console.log(results);
   if (!!results && results.values.length === 1) {
       this.translateService.setDefaultLang(results.values[0].value);
       this.translateService.use(results.values[0].value);

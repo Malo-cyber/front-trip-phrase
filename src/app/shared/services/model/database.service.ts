@@ -12,7 +12,6 @@ import { SQLiteService } from './sqlite.service';
   providedIn: 'root',
 })
 export class DatabaseService implements Resolve<any> {
-  public isDataInit: Observable<boolean> = of(false);
 
   public databaseConnection: SQLiteDBConnection | undefined;
 
@@ -39,7 +38,6 @@ export class DatabaseService implements Resolve<any> {
     await this.configService.getModeApp(db);
     await this.configService.getCurrentLang(db);
     await db.close();
-    this.isDataInit = of(true);
   }
 
   public async getDatabaseConnection(): Promise<SQLiteDBConnection> {
