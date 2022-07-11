@@ -2,7 +2,7 @@
   <app-add-langue-form
     *ngIf="!this.isReadOnly"
     [parentFormGroup]="addPhraseForm"
-    (addPhraseLine)="addPhraseLine($event)"
+    (clickOption)="addPhraseLine($event)"
   ></app-add-langue-form>
   <div class="phrases-form">
     <div

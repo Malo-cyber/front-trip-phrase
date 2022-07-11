@@ -4,7 +4,7 @@
     <div class="config-panel">
       <app-add-langue-form
         [parentFormGroup]="addFavoriteLanguagesForm"
-        (addPhraseLine)="addFavorite($event)"
+        (clickOption)="addFavorite($event)"
       ></app-add-langue-form>
       <div class="title-wrapper">
         <h2>{{ 'fav-languages' | translate}}</h2>

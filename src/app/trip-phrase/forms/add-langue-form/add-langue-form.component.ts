@@ -27,7 +27,7 @@ export class AddLangueFormComponent implements OnInit {
 
   public formControlLangue = new FormControl(null);
 
-  @Output() addPhraseLine = new EventEmitter<any>();
+  @Output() clickOption = new EventEmitter<any>();
 
   constructor() { }
 
@@ -59,8 +59,8 @@ export class AddLangueFormComponent implements OnInit {
     return country && country.name ? country.name : '';
   }
 
-  sendLangueSelected(){
-    this.addPhraseLine.emit(this.formControlLangue.value);
+  sendLangue(optionValueClick : Country){
+    this.clickOption.emit(optionValueClick);
     this.formControlLangue.setValue(null);
   }
 

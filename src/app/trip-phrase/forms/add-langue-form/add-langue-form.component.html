@@ -17,13 +17,11 @@
       <mat-option
         *ngFor="let option of filteredOptionsCountries | async"
         [value]="option"
+        (click)="sendLangue(option)"
       >
         {{ option.name }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
   <!-- ADD LINE BUTTON-->
-  <button mat-raised-button color="primary" (click)="sendLangueSelected()">
-    {{ "add" | translate }}
-  </button>
 </mat-toolbar>
